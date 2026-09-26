@@ -1,1929 +1,2789 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAM TOURNAMENT ZONE</title>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+MAM TOURNAMENT ZONE
+</title>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
+
+/* =========================================
+   BASIC
+========================================= */
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
+
 
 body{
-  font-family:Arial,sans-serif;
-  background:#070b16;
-  color:white;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    background:
+        #070b14;
+
+    color:#ffffff;
+
+    min-height:100vh;
+
 }
 
-header{
-  background:#0d1428;
-  border-bottom:1px solid #29365b;
-  padding:14px;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.header{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.logo{
-  color:#00e5ff;
-  font-size:18px;
-  font-weight:bold;
-}
 
 button{
-  border:0;
-  cursor:pointer;
-  font-weight:bold;
+
+    border:none;
+
+    border-radius:9px;
+
+    padding:11px 15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
 }
+
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:#101827;
+
+    border-bottom:
+        1px solid #263248;
+
+    padding:14px 16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.logo{
+
+    color:#00e5ff;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+
+.account{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
 
 .login-btn{
-  background:#00e5ff;
-  color:#001014;
-  padding:10px 14px;
-  border-radius:8px;
+
+    background:#2563eb;
+
+    color:#fff;
+
 }
+
 
 .logout-btn{
-  background:#ff4757;
-  color:white;
-  padding:10px 14px;
-  border-radius:8px;
+
+    background:#ef4444;
+
+    color:#fff;
+
 }
 
-.hero{
-  text-align:center;
-  padding:65px 20px;
-  background:radial-gradient(circle at top,#182b63,#080d1b 65%);
-}
-
-.hero h1{
-  color:#00e5ff;
-  font-size:35px;
-  margin-bottom:12px;
-}
-
-.hero p{
-  color:#cbd5e1;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:35px 15px;
-}
-
-.welcome{
-  text-align:center;
-  color:#b8c2df;
-  margin-bottom:25px;
-}
-
-.section-title{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.tournament-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:#111a33;
-  border:1px solid #293860;
-  border-radius:16px;
-  padding:20px;
-}
-
-.card h3{
-  color:#00e5ff;
-  margin-bottom:15px;
-}
-
-.card p{
-  color:#d7ddf5;
-  margin:10px 0;
-}
-
-.free-fire{
-  display:inline-block;
-  background:#ff8c00;
-  padding:5px 9px;
-  border-radius:6px;
-  font-size:12px;
-  margin-bottom:12px;
-}
-
-.status{
-  color:#00e676;
-}
 
 .join-btn{
-  width:100%;
-  padding:13px;
-  margin-top:15px;
-  border-radius:9px;
-  background:#00e676;
-  color:#001b0b;
-  font-size:16px;
-}
 
-.loading{
-  text-align:center;
-  color:#9da9c9;
-  padding:30px;
-}
+    width:100%;
 
-footer{
-  background:#040711;
-  text-align:center;
-  color:#7f8aaa;
-  padding:30px;
-  margin-top:40px;
+    margin-top:15px;
+
+    background:#00b8d4;
+
+    color:#001017;
+
 }
 
 
-/* MODAL */
+.secondary-btn{
 
-.modal,
-.join-modal,
-.payment-modal,
-.success-modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:rgba(0,0,0,.88);
-  padding:20px;
-  overflow-y:auto;
+    width:100%;
+
+    background:#263248;
+
+    color:#fff;
+
+    margin-top:8px;
+
 }
 
-.box{
-  width:100%;
-  max-width:440px;
-  margin:35px auto;
-  background:#111a33;
-  border:1px solid #34436f;
-  border-radius:17px;
-  padding:25px;
+
+.delete-btn{
+
+    background:#ef4444;
+
+    color:#fff;
+
+    margin-top:12px;
+
+    width:100%;
+
 }
 
-.box h2{
-  text-align:center;
-  color:#00e5ff;
-  margin-bottom:20px;
+
+/* =========================================
+   MAIN
+========================================= */
+
+main{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:
+        20px
+        15px
+        60px;
+
 }
 
-input,
-select{
-  width:100%;
-  padding:14px;
-  margin-bottom:14px;
-  border-radius:9px;
-  border:1px solid #394873;
-  background:#080d1b;
-  color:white;
-  outline:none;
-  font-size:15px;
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero{
+
+    text-align:center;
+
+    padding:
+        42px 10px
+        35px;
+
 }
 
-input:focus,
-select:focus{
-  border-color:#00e5ff;
+
+.hero h1{
+
+    color:#00e5ff;
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
 }
 
-select option{
-  background:#080d1b;
-  color:white;
+
+.hero p{
+
+    color:#9ca8bd;
+
 }
 
-label{
-  display:block;
-  margin-bottom:7px;
-  color:#d7ddf5;
-  font-weight:bold;
+
+/* =========================================
+   WELCOME
+========================================= */
+
+.welcome{
+
+    background:#101827;
+
+    border:
+        1px solid #263248;
+
+    border-radius:14px;
+
+    padding:16px;
+
+    margin-bottom:25px;
+
+    line-height:1.8;
+
 }
 
-.primary{
-  width:100%;
-  padding:14px;
-  border-radius:9px;
-  background:#00e5ff;
-  color:#001014;
-  font-size:15px;
+
+.welcome strong{
+
+    color:#00e5ff;
+
 }
 
-.secondary{
-  width:100%;
-  padding:13px;
-  border-radius:9px;
-  background:#303a5f;
-  color:white;
-  margin-top:10px;
+
+/* =========================================
+   SECTION
+========================================= */
+
+.section{
+
+    margin-top:30px;
+
 }
 
-.switch{
-  text-align:center;
-  color:#00e5ff;
-  margin-top:16px;
-  cursor:pointer;
+
+.section-title{
+
+    font-size:22px;
+
+    margin-bottom:15px;
+
 }
+
+
+/* =========================================
+   TOURNAMENT GRID
+========================================= */
+
+.tournament-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(280px,1fr)
+        );
+
+    gap:16px;
+
+}
+
+
+/* =========================================
+   TOURNAMENT CARD
+========================================= */
+
+.tournament-card{
+
+    background:#101827;
+
+    border:
+        1px solid #263248;
+
+    border-radius:15px;
+
+    padding:18px;
+
+    transition:.2s;
+
+}
+
+
+.tournament-card:hover{
+
+    border-color:#00e5ff;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.tournament-card h3{
+
+    color:#00e5ff;
+
+    font-size:19px;
+
+    margin-bottom:12px;
+
+}
+
+
+.info{
+
+    color:#c6cfdf;
+
+    line-height:2;
+
+    font-size:14px;
+
+}
+
+
+.description{
+
+    color:#9da9bd;
+
+    margin-top:10px;
+
+    line-height:1.7;
+
+}
+
+
+.available{
+
+    display:inline-block;
+
+    margin-top:12px;
+
+    background:#123c2b;
+
+    color:#61e6a0;
+
+    padding:
+        5px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+}
+
+
+/* =========================================
+   MY TOURNAMENTS
+========================================= */
+
+.my-card{
+
+    background:#101827;
+
+    border:
+        1px solid #263248;
+
+    border-radius:14px;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+}
+
+
+.my-card h3{
+
+    color:#00e5ff;
+
+    margin-bottom:10px;
+
+}
+
+
+.my-info{
+
+    color:#c4ccdc;
+
+    line-height:1.9;
+
+    font-size:14px;
+
+}
+
+
+.joined{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    background:#123c2b;
+
+    color:#61e6a0;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+}
+
+
+.empty{
+
+    background:#101827;
+
+    border:
+        1px solid #263248;
+
+    border-radius:14px;
+
+    padding:28px 20px;
+
+    text-align:center;
+
+    color:#9ca8bd;
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:1000;
+
+    background:
+        rgba(0,0,0,.80);
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+}
+
+
+.modal-box{
+
+    width:100%;
+
+    max-width:430px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:#101827;
+
+    border:
+        1px solid #2b3852;
+
+    border-radius:16px;
+
+    padding:22px;
+
+}
+
+
+.modal-box h2{
+
+    color:#00e5ff;
+
+    margin-bottom:18px;
+
+}
+
+
+.close-btn{
+
+    float:right;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    padding:
+        6px 10px;
+
+}
+
+
+input{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-bottom:12px;
+
+    border:
+        1px solid #344158;
+
+    border-radius:9px;
+
+    background:#080d18;
+
+    color:#fff;
+
+    outline:none;
+
+}
+
+
+input:focus{
+
+    border-color:#00e5ff;
+
+}
+
+
+.primary-btn{
+
+    width:100%;
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
 
 .message{
-  text-align:center;
-  color:#ffd166;
-  margin-top:12px;
-  font-size:14px;
+
+    min-height:20px;
+
+    margin-top:12px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    line-height:1.5;
+
 }
 
 
-/* JOIN STEPS */
+/* =========================================
+   FOOTER
+========================================= */
 
-.step{
-  display:none;
-}
+footer{
 
-.step.active{
-  display:block;
-}
+    border-top:
+        1px solid #202b40;
 
-.step-title{
-  text-align:center;
-  color:#00e5ff;
-  margin-bottom:8px;
-}
+    padding:28px 15px;
 
-.step-subtitle{
-  text-align:center;
-  color:#aeb8d8;
-  font-size:14px;
-  margin-bottom:20px;
-}
+    text-align:center;
 
-.step-indicator{
-  display:flex;
-  gap:7px;
-  margin-bottom:22px;
-}
+    color:#667085;
 
-.step-dot{
-  flex:1;
-  height:5px;
-  background:#303a5f;
-  border-radius:10px;
-}
+    font-size:13px;
 
-.step-dot.active{
-  background:#00e5ff;
-}
-
-.tournament-name{
-  background:#080d1b;
-  border:1px solid #293860;
-  padding:12px;
-  border-radius:9px;
-  margin-bottom:18px;
-  text-align:center;
-  color:#00e676;
-  font-weight:bold;
 }
 
 
-/* PAYMENT */
-
-.payment-card{
-  background:#080d1b;
-  border:1px solid #293860;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
-.payment-card h3{
-  margin-bottom:7px;
-}
-
-.bkash{
-  color:#ff4f9a;
-}
-
-.nagad{
-  color:#ff9f1c;
-}
-
-.number{
-  color:#00e676;
-  font-size:21px;
-  font-weight:bold;
-  letter-spacing:1px;
-  margin:7px 0;
-}
-
-.payment-note{
-  color:#9da9c9;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.amount-box{
-  background:#10223a;
-  border:1px solid #00e5ff;
-  padding:13px;
-  border-radius:10px;
-  text-align:center;
-  margin-bottom:16px;
-}
-
-.amount-box span{
-  color:#00e676;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.error-box{
-  display:none;
-  background:#3b1620;
-  border:1px solid #7d2938;
-  color:#ff9aa6;
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:14px;
-  white-space:pre-line;
-}
-
-
-/* SUCCESS */
-
-.success{
-  text-align:center;
-  border-color:#00e676;
-}
-
-.success-icon{
-  font-size:55px;
-}
-
-.success h2{
-  color:#00e676;
-  margin:10px 0;
-}
-
-.success p{
-  color:#d7ddf5;
-  line-height:1.8;
-  white-space:pre-line;
-}
+/* =========================================
+   MOBILE
+========================================= */
 
 @media(max-width:600px){
 
-  .logo{
-    font-size:14px;
-  }
+    .logo{
 
-  .hero h1{
-    font-size:27px;
-  }
+        font-size:18px;
 
-  .box{
-    margin:20px auto;
-  }
+    }
+
+
+    .hero h1{
+
+        font-size:26px;
+
+    }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 
+<!-- =========================================
+HEADER
+========================================= -->
+
 <header>
-<div class="header">
 
-<div class="logo">
-🎮 MAM TOURNAMENT ZONE
-</div>
+    <div class="logo">
 
-<div id="accountArea">
+        🎮 MAM TOURNAMENT ZONE
 
-<button class="login-btn" onclick="openAuth()">
-Login / Register
-</button>
+    </div>
 
-</div>
 
-</div>
+    <div
+        class="account"
+        id="accountArea"
+    >
+
+        <button
+            class="login-btn"
+            onclick="openAuth()"
+        >
+
+            Login / Register
+
+        </button>
+
+    </div>
+
 </header>
 
 
-<section class="hero">
 
-<h1>
-🔥 MAM TOURNAMENT ZONE
-</h1>
+<!-- =========================================
+MAIN
+========================================= -->
 
-<p>
-FREE FIRE TOURNAMENT PLATFORM
-</p>
-
-</section>
+<main>
 
 
-<div class="container">
+    <section class="hero">
 
-<div id="welcome" class="welcome"></div>
+        <h1>
 
-<h2 class="section-title">
-🎮 Free Fire Tournaments
-</h2>
+            🏆 Free Fire Tournament
 
-<div id="tournamentList" class="tournament-grid">
+        </h1>
 
-<div class="loading">
-Tournament loading...
-</div>
 
-</div>
+        <p>
 
-</div>
+            Welcome to MAM TOURNAMENT ZONE
 
+        </p>
+
+    </section>
+
+
+
+    <!-- WELCOME -->
+
+    <div
+        id="welcomeBox"
+        class="welcome"
+        style="display:none;"
+    >
+
+    </div>
+
+
+
+    <!-- =====================================
+         AVAILABLE TOURNAMENTS
+    ====================================== -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+
+            🎯 Available Tournaments
+
+        </h2>
+
+
+        <div
+            id="tournamentList"
+            class="tournament-grid"
+        >
+
+            <div class="empty">
+
+                Tournament loading...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         MY TOURNAMENTS
+    ====================================== -->
+
+    <section
+        id="myTournamentSection"
+        class="section"
+        style="display:none;"
+    >
+
+        <h2 class="section-title">
+
+            👤 My Tournaments
+
+        </h2>
+
+
+        <div
+            id="myTournamentList"
+        >
+
+            <div class="empty">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================
+FOOTER
+========================================= -->
 
 <footer>
 
-© 2026 MAM TOURNAMENT ZONE
+    © 2026 MAM TOURNAMENT ZONE
 
 </footer>
 
 
-<!-- LOGIN -->
 
-<div id="authModal" class="modal">
-
-<div class="box">
-
-<h2 id="authTitle">
-Login
-</h2>
-
-<input
-id="nameInput"
-type="text"
-placeholder="আপনার নাম"
-style="display:none"
->
-
-<input
-id="emailInput"
-type="email"
-placeholder="Email"
->
-
-<input
-id="passwordInput"
-type="password"
-placeholder="Password"
->
-
-<button
-id="authButton"
-class="primary"
-onclick="handleAuth()">
-Login
-</button>
-
-<div id="message" class="message"></div>
-
-<button
-class="secondary"
-onclick="closeAuth()">
-Close
-</button>
+<!-- =========================================
+LOGIN MODAL
+========================================= -->
 
 <div
-id="switchText"
-class="switch"
-onclick="switchAuth()">
-Create Account
-</div>
+    class="modal"
+    id="authModal"
+>
+
+
+    <div class="modal-box">
+
+
+        <button
+            class="close-btn"
+            onclick="closeAuth()"
+        >
+
+            ×
+
+        </button>
+
+
+        <h2 id="authTitle">
+
+            Login
+
+        </h2>
+
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+        >
+
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+
+        <button
+            id="authButton"
+            class="primary-btn"
+            onclick="loginUser()"
+        >
+
+            Login
+
+        </button>
+
+
+        <button
+            id="switchButton"
+            class="secondary-btn"
+            onclick="switchAuthMode()"
+        >
+
+            Create Account
+
+        </button>
+
+
+        <div
+            id="authMessage"
+            class="message"
+        >
+
+        </div>
+
+
+    </div>
 
 </div>
-</div>
 
 
-<!-- JOIN MODAL -->
 
-<div id="joinModal" class="join-modal">
-
-<div class="box">
-
-<div class="step-indicator">
-
-<div id="dot1" class="step-dot active"></div>
-<div id="dot2" class="step-dot"></div>
-
-</div>
-
-
-<!-- STEP 1 -->
-
-<div id="step1" class="step active">
-
-<h2 class="step-title">
-🎮 Tournament Join
-</h2>
-
-<div class="step-subtitle">
-প্রথমে আপনার Player তথ্য দিন
-</div>
+<!-- =========================================
+JOIN MODAL
+========================================= -->
 
 <div
-id="joinTournamentName"
-class="tournament-name">
-</div>
-
-
-<div id="joinError" class="error-box"></div>
-
-
-<label>
-Player Name
-</label>
-
-<input
-id="joinName"
-type="text"
-placeholder="আপনার নাম"
+    class="modal"
+    id="joinModal"
 >
 
 
-<label>
-Free Fire UID
-</label>
-
-<input
-id="freeFireUID"
-type="text"
-placeholder="Free Fire UID"
-inputmode="numeric"
->
+    <div class="modal-box">
 
 
-<label>
-Free Fire Name
-</label>
+        <button
+            class="close-btn"
+            onclick="closeJoin()"
+        >
 
-<input
-id="freeFireName"
-type="text"
-placeholder="Free Fire Name"
->
+            ×
 
-
-<label>
-WhatsApp Number
-</label>
-
-<input
-id="joinWhatsapp"
-type="tel"
-placeholder="017XXXXXXXX"
-maxlength="11"
-inputmode="numeric"
->
+        </button>
 
 
-<button
-class="primary"
-onclick="goToPayment()">
+        <h2>
 
-➡️ NEXT: PAYMENT
+            🎮 Join Tournament
 
-</button>
-
-<button
-class="secondary"
-onclick="closeJoinModal()">
-
-Cancel
-
-</button>
-
-</div>
+        </h2>
 
 
-<!-- STEP 2 PAYMENT -->
+        <div
+            id="joinTournamentTitle"
+            class="welcome"
+        >
 
-<div id="step2" class="step">
-
-<h2 class="step-title">
-💳 Payment
-</h2>
-
-<div class="step-subtitle">
-Payment Method নির্বাচন করুন
-</div>
+        </div>
 
 
-<div
-id="paymentAmount"
-class="amount-box">
-Entry Fee:
-<span>৳0</span>
-</div>
+        <input
+            type="text"
+            id="playerName"
+            placeholder="Your Name"
+        >
 
 
-<label>
-Payment Method
-</label>
-
-<select
-id="paymentMethod"
-onchange="showPaymentNumber()">
-
-<option value="">
-Payment Method Select করুন
-</option>
-
-<option value="bKash">
-bKash
-</option>
-
-<option value="Nagad">
-Nagad
-</option>
-
-</select>
+        <input
+            type="text"
+            id="freeFireUID"
+            placeholder="Free Fire UID"
+        >
 
 
-<!-- BKASH -->
+        <input
+            type="text"
+            id="freeFireName"
+            placeholder="Free Fire Name"
+        >
 
-<div
-id="bkashInfo"
-class="payment-card"
-style="display:none">
 
-<h3 class="bkash">
-bKash
-</h3>
+        <input
+            type="text"
+            id="whatsapp"
+            placeholder="WhatsApp Number"
+        >
 
-<div>
-Send Money Number:
-</div>
 
-<div class="number">
-01759748984
-</div>
+        <button
+            id="joinSubmitButton"
+            class="primary-btn"
+            onclick="submitJoin()"
+        >
 
-<div class="payment-note">
-উপরের bKash নম্বরে Entry Fee Send Money করুন।
-তারপর নিচে Transaction ID দিন।
-</div>
+            ✅ Join Tournament
+
+        </button>
+
+
+        <div
+            id="joinMessage"
+            class="message"
+        >
+
+        </div>
+
+
+    </div>
 
 </div>
 
-
-<!-- NAGAD -->
-
-<div
-id="nagadInfo"
-class="payment-card"
-style="display:none">
-
-<h3 class="nagad">
-Nagad
-</h3>
-
-<div>
-Send Money Number:
-</div>
-
-<div class="number">
-01759748984
-</div>
-
-<div class="payment-note">
-উপরের Nagad নম্বরে Entry Fee Send Money করুন।
-তারপর নিচে Transaction ID দিন।
-</div>
-
-</div>
-
-
-<label>
-Transaction ID
-</label>
-
-<input
-id="transactionID"
-type="text"
-placeholder="Payment করার পর Transaction ID"
->
-
-
-<div id="paymentError" class="error-box"></div>
-
-
-<button
-id="finalSubmitButton"
-class="primary"
-onclick="submitJoin()">
-
-✅ FINAL SUBMIT
-
-</button>
-
-<button
-class="secondary"
-onclick="backToPlayerInfo()">
-
-⬅️ Back
-
-</button>
-
-</div>
-
-</div>
-</div>
-
-
-<!-- SUCCESS -->
-
-<div id="successModal" class="success-modal">
-
-<div class="box success">
-
-<div class="success-icon">
-✅
-</div>
-
-<h2>
-Join Request Submitted
-</h2>
-
-<p id="successText"></p>
-
-<button
-class="primary"
-onclick="closeSuccess()">
-
-Done
-
-</button>
-
-</div>
-
-</div>
 
 
 <script>
 
-/* =========================================
-SUPABASE
-========================================= */
+
+/* =================================================
+   SUPABASE
+================================================= */
 
 const SUPABASE_URL =
 "https://gxnijfjzigbxvibgtvwj.supabase.co";
 
-const SUPABASE_KEY =
+
+const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_kegdIDq_ppqQF302sJXVWA_v_fzHc7E";
+
 
 const supabaseClient =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+
+    SUPABASE_URL,
+
+    SUPABASE_PUBLISHABLE_KEY
+
 );
 
 
-/* =========================================
-VARIABLES
-========================================= */
 
-let authMode = "login";
+/* =================================================
+   GLOBAL VARIABLES
+================================================= */
 
-let currentTournamentId = null;
+let registerMode = false;
 
 let currentTournament = null;
 
 
-/* =========================================
-AUTH
-========================================= */
+
+/* =================================================
+   ESCAPE HTML
+================================================= */
+
+function escapeHtml(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+
+/* =================================================
+   AUTH MODAL
+================================================= */
 
 function openAuth(){
 
-document.getElementById("authModal")
-.style.display="block";
-
-authMode="login";
-
-updateAuthBox();
+    document
+        .getElementById("authModal")
+        .style.display =
+        "flex";
 
 }
 
 
 function closeAuth(){
 
-document.getElementById("authModal")
-.style.display="none";
-
-document.getElementById("message")
-.innerText="";
-
-}
-
-
-function switchAuth(){
-
-authMode =
-authMode==="login"
-? "register"
-: "login";
-
-updateAuthBox();
+    document
+        .getElementById("authModal")
+        .style.display =
+        "none";
 
 }
 
 
-function updateAuthBox(){
 
-const title =
-document.getElementById("authTitle");
+/* =================================================
+   AUTH MODE
+================================================= */
 
-const button =
-document.getElementById("authButton");
+function switchAuthMode(){
 
-const name =
-document.getElementById("nameInput");
-
-const switchText =
-document.getElementById("switchText");
+    registerMode =
+        !registerMode;
 
 
-if(authMode==="login"){
-
-title.innerText="Login";
-
-button.innerText="Login";
-
-name.style.display="none";
-
-switchText.innerText=
-"Create Account";
-
-}else{
-
-title.innerText=
-"Create Account";
-
-button.innerText=
-"Register";
-
-name.style.display="block";
-
-switchText.innerText=
-"Already have an account? Login";
-
-}
-
-}
+    const title =
+        document.getElementById(
+            "authTitle"
+        );
 
 
-/* =========================================
-LOGIN / REGISTER
-========================================= */
-
-async function handleAuth(){
-
-const message =
-document.getElementById("message");
-
-const email =
-document.getElementById("emailInput")
-.value.trim();
-
-const password =
-document.getElementById("passwordInput")
-.value;
-
-const name =
-document.getElementById("nameInput")
-.value.trim();
+    const button =
+        document.getElementById(
+            "authButton"
+        );
 
 
-message.innerText="";
+    const switchButton =
+        document.getElementById(
+            "switchButton"
+        );
 
 
-if(!email || !password){
+    if(registerMode){
 
-message.innerText=
-"Email এবং Password দিন।";
+        title.innerText =
+            "Create Account";
 
-return;
+
+        button.innerText =
+            "Register";
+
+
+        button.onclick =
+            registerUser;
+
+
+        switchButton.innerText =
+            "Already have an account? Login";
+
+
+    }else{
+
+        title.innerText =
+            "Login";
+
+
+        button.innerText =
+            "Login";
+
+
+        button.onclick =
+            loginUser;
+
+
+        switchButton.innerText =
+            "Create Account";
+
+    }
 
 }
 
 
-if(password.length < 6){
 
-message.innerText=
-"Password কমপক্ষে ৬ অক্ষরের হতে হবে।";
+/* =================================================
+   MESSAGE
+================================================= */
 
-return;
+function authMessage(
+    text,
+    type=""
+){
 
-}
-
-
-try{
-
-if(authMode==="register"){
-
-if(!name){
-
-message.innerText=
-"আপনার নাম দিন।";
-
-return;
-
-}
+    const box =
+        document.getElementById(
+            "authMessage"
+        );
 
 
-message.innerText=
-"Account তৈরি হচ্ছে...";
+    box.innerText =
+        text;
 
 
-const {
-data,
-error
-} =
-await supabaseClient.auth.signUp({
+    box.style.color =
+        type === "error"
 
-email:email,
+        ? "#ff7070"
 
-password:password,
+        : type === "success"
 
-options:{
-data:{
-name:name
-}
-}
+        ? "#5ee69a"
 
-});
-
-
-if(error){
-
-message.innerText=
-error.message;
-
-return;
+        : "#aab4c8";
 
 }
 
 
-if(data.user && !data.session){
 
-message.innerText=
-"Registration সফল। Email verify করুন।";
+/* =================================================
+   LOGIN
+================================================= */
 
-return;
+async function loginUser(){
+
+    const email =
+        document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById("password")
+            .value;
+
+
+    if(!email){
+
+        authMessage(
+            "Email দিন।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!password){
+
+        authMessage(
+            "Password দিন।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "authButton"
+        );
+
+
+    button.disabled =
+        true;
+
+    button.innerText =
+        "Logging in...";
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .auth
+        .signInWithPassword({
+
+            email,
+
+            password
+
+        });
+
+
+    button.disabled =
+        false;
+
+    button.innerText =
+        "Login";
+
+
+    if(error){
+
+        authMessage(
+            "Login হয়নি: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    authMessage(
+        "Login সফল হয়েছে।",
+        "success"
+    );
+
+
+    setTimeout(
+        async function(){
+
+            closeAuth();
+
+            await updateAccount();
+
+            await loadMyTournaments();
+
+        },
+        600
+    );
 
 }
 
 
-message.innerText=
-"Registration সফল হয়েছে!";
+
+/* =================================================
+   REGISTER
+================================================= */
+
+async function registerUser(){
+
+    const email =
+        document
+            .getElementById("email")
+            .value
+            .trim();
 
 
-setTimeout(()=>{
+    const password =
+        document
+            .getElementById("password")
+            .value;
 
-closeAuth();
 
-updateAccount();
+    if(!email){
 
-},800);
+        authMessage(
+            "Email দিন।",
+            "error"
+        );
 
-return;
+        return;
+
+    }
+
+
+    if(!password){
+
+        authMessage(
+            "Password দিন।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        authMessage(
+            "Password কমপক্ষে ৬ অক্ষরের দিন।",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "authButton"
+        );
+
+
+    button.disabled =
+        true;
+
+    button.innerText =
+        "Registering...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .signUp({
+
+            email,
+
+            password
+
+        });
+
+
+    button.disabled =
+        false;
+
+    button.innerText =
+        "Register";
+
+
+    if(error){
+
+        authMessage(
+            "Registration হয়নি: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(data.session){
+
+        authMessage(
+            "Registration সফল হয়েছে।",
+            "success"
+        );
+
+
+        setTimeout(
+            async function(){
+
+                closeAuth();
+
+                await updateAccount();
+
+                await loadMyTournaments();
+
+            },
+            600
+        );
+
+
+    }else{
+
+        authMessage(
+            "Account তৈরি হয়েছে। Email verification প্রয়োজন হতে পারে।",
+            "success"
+        );
+
+    }
 
 }
 
 
-/* LOGIN */
 
-message.innerText=
-"Login হচ্ছে...";
-
-
-const {
-error
-} =
-await supabaseClient.auth.signInWithPassword({
-
-email:email,
-
-password:password
-
-});
-
-
-if(error){
-
-message.innerText=
-error.message;
-
-return;
-
-}
-
-
-message.innerText=
-"Login সফল হয়েছে!";
-
-
-setTimeout(()=>{
-
-closeAuth();
-
-updateAccount();
-
-},700);
-
-
-}catch(error){
-
-console.error(error);
-
-message.innerText=
-"Failed to fetch — Supabase connection পরীক্ষা করুন।";
-
-}
-
-}
-
-
-/* =========================================
-ACCOUNT
-========================================= */
+/* =================================================
+   ACCOUNT
+================================================= */
 
 async function updateAccount(){
 
-const {
-data:{
-user
+    const account =
+        document.getElementById(
+            "accountArea"
+        );
+
+
+    const welcome =
+        document.getElementById(
+            "welcomeBox"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data ||
+        !data.user
+    ){
+
+        account.innerHTML = `
+
+            <button
+                class="login-btn"
+                onclick="openAuth()"
+            >
+
+                Login / Register
+
+            </button>
+
+        `;
+
+
+        welcome.style.display =
+            "none";
+
+
+        document
+            .getElementById(
+                "myTournamentSection"
+            )
+            .style.display =
+            "none";
+
+
+        return;
+
+    }
+
+
+    const user =
+        data.user;
+
+
+    const name =
+        user.user_metadata?.name ||
+
+        user.email
+            ?.split("@")[0] ||
+
+        "Player";
+
+
+    account.innerHTML = `
+
+        <span>
+
+            👤
+            ${escapeHtml(name)}
+
+        </span>
+
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+
+            Logout
+
+        </button>
+
+    `;
+
+
+    welcome.style.display =
+        "block";
+
+
+    welcome.innerHTML = `
+
+        👋 Welcome,
+        <strong>
+            ${escapeHtml(name)}
+        </strong>
+
+        <br>
+
+        📧
+        ${escapeHtml(
+            user.email || ""
+        )}
+
+    `;
+
 }
-} =
-await supabaseClient.auth.getUser();
 
 
-const account =
-document.getElementById("accountArea");
 
-const welcome =
-document.getElementById("welcome");
-
-
-if(!user){
-
-account.innerHTML=`
-
-<button
-class="login-btn"
-onclick="openAuth()">
-Login / Register
-</button>
-
-`;
-
-welcome.innerText="";
-
-return;
-
-}
-
-
-const name =
-user.user_metadata?.name ||
-user.email?.split("@")[0] ||
-"Player";
-
-
-account.innerHTML=`
-
-<span style="margin-right:7px">
-👤 ${escapeHtml(name)}
-</span>
-
-<button
-class="logout-btn"
-onclick="logout()">
-Logout
-</button>
-
-`;
-
-welcome.innerText=
-"Welcome, "+name+" 👋";
-
-}
-
+/* =================================================
+   LOGOUT
+================================================= */
 
 async function logout(){
 
-await supabaseClient.auth.signOut();
+    await supabaseClient
+        .auth
+        .signOut();
 
-updateAccount();
+
+    updateAccount();
+
+
+    document
+        .getElementById(
+            "myTournamentSection"
+        )
+        .style.display =
+        "none";
 
 }
 
 
-/* =========================================
-LOAD TOURNAMENTS
-========================================= */
+
+/* =================================================
+   LOAD TOURNAMENTS
+================================================= */
 
 async function loadTournaments(){
 
-const list =
-document.getElementById("tournamentList");
+    const list =
+        document.getElementById(
+            "tournamentList"
+        );
 
 
-try{
+    list.innerHTML = `
 
-const {
-data,
-error
-} =
-await supabaseClient
-.from("tournaments")
-.select("*")
-.eq("game","Free Fire")
-.order(
-"created_at",
-{ascending:false}
-);
+        <div class="empty">
+
+            Tournament loading...
+
+        </div>
+
+    `;
 
 
-if(error){
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
 
-console.error(error);
+        .from("tournaments")
 
-list.innerHTML=
-'<div class="loading">Tournament load করা যায়নি।</div>';
+        .select("*")
 
-return;
+        .eq(
+            "game",
+            "Free Fire"
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                Tournament load করা যায়নি।
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                🏆
+
+                <br><br>
+
+                এখন কোনো Tournament প্রকাশ করা হয়নি।
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        "";
+
+
+    data.forEach(
+        function(tournament){
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "tournament-card";
+
+
+            const title =
+                tournament.title ||
+
+                tournament.name ||
+
+                "Free Fire Tournament";
+
+
+            const date =
+                tournament.date ||
+
+                tournament.tournament_date ||
+
+                tournament.match_date ||
+
+                tournament.start_date ||
+
+                "";
+
+
+            const time =
+                tournament.time ||
+
+                tournament.tournament_time ||
+
+                tournament.match_time ||
+
+                tournament.start_time ||
+
+                "";
+
+
+            const description =
+                tournament.description ||
+
+                "";
+
+
+            /*
+               IMPORTANT:
+               Tournament ID string হিসেবে নেওয়া হচ্ছে
+               যাতে UUID / numeric ID দুটোই কাজ করতে পারে।
+            */
+
+            const tournamentId =
+                String(
+                    tournament.id
+                );
+
+
+            card.innerHTML = `
+
+                <h3>
+
+                    🎮
+                    ${escapeHtml(title)}
+
+                </h3>
+
+
+                <div class="info">
+
+                    📅 Date:
+                    ${escapeHtml(
+                        date || "Not set"
+                    )}
+
+                    <br>
+
+                    ⏰ Time:
+                    ${escapeHtml(
+                        time || "Not set"
+                    )}
+
+                    <br>
+
+                    🎯 Game:
+                    Free Fire
+
+                </div>
+
+
+                ${
+                    description
+
+                    ?
+
+                    `
+
+                    <div class="description">
+
+                        📝
+                        ${escapeHtml(
+                            description
+                        )}
+
+                    </div>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+
+                <span class="available">
+
+                    ● Available
+
+                </span>
+
+
+                <button
+                    class="join-btn"
+                    onclick='openJoin(${JSON.stringify(
+                        {
+                            id:tournamentId,
+                            title:title,
+                            date:date,
+                            time:time
+                        }
+                    )})'
+                >
+
+                    🎮 Join Tournament
+
+                </button>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
-if(!data || data.length===0){
 
-list.innerHTML=
-'<div class="loading">এখন কোনো Free Fire Tournament নেই।</div>';
+/* =================================================
+   OPEN JOIN
+================================================= */
 
-return;
+async function openJoin(tournament){
 
-}
-
-
-list.innerHTML="";
-
-
-data.forEach(tournament=>{
-
-const card =
-document.createElement("div");
-
-card.className="card";
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
 
 
-card.innerHTML=`
+    if(
+        error ||
+        !data ||
+        !data.user
+    ){
 
-<div class="free-fire">
-FREE FIRE
-</div>
-
-<h3>
-🔥 ${escapeHtml(tournament.title)}
-</h3>
-
-<p>
-📅 Date:
-${escapeHtml(tournament.date || "-")}
-</p>
-
-<p>
-⏰ Time:
-${escapeHtml(tournament.time || "-")}
-</p>
-
-<p>
-💰 Entry Fee:
-৳${escapeHtml(
-String(tournament.entry_fee ?? 0)
-)}
-</p>
-
-<p>
-🏆 Prize Pool:
-৳${escapeHtml(
-String(tournament.prize_pool ?? 0)
-)}
-</p>
-
-<p>
-👥 Max Players:
-${escapeHtml(
-String(tournament.max_players ?? 0)
-)}
-</p>
-
-<p>
-📌 Status:
-<span class="status">
-${escapeHtml(
-tournament.status || "Open"
-)}
-</span>
-</p>
-
-<button
-class="join-btn"
-onclick='openJoinModal(
-${tournament.id},
-${JSON.stringify(tournament.title || "")},
-${Number(tournament.entry_fee || 0)}
-)'>
-
-🎮 JOIN TOURNAMENT
-
-</button>
-
-`;
-
-list.appendChild(card);
-
-});
-
-}catch(error){
-
-console.error(error);
-
-list.innerHTML=
-'<div class="loading">Connection error।</div>';
-
-}
-
-}
+        alert(
+            "Tournament Join করতে আগে Login করুন।"
+        );
 
 
-/* =========================================
-OPEN JOIN
-========================================= */
+        openAuth();
 
-async function openJoinModal(
-tournamentId,
-tournamentName,
-entryFee
-){
+        return;
 
-const {
-data:{
-user
-}
-} =
-await supabaseClient.auth.getUser();
+    }
 
 
-if(!user){
+    currentTournament =
+        tournament;
 
-alert(
-"আগে Login করুন।"
-);
 
-openAuth();
+    document
+        .getElementById(
+            "joinTournamentTitle"
+        )
+        .innerHTML = `
 
-return;
+            <strong>
+
+                🎮
+                ${escapeHtml(
+                    tournament.title
+                )}
+
+            </strong>
+
+            <br>
+
+            📅
+            ${escapeHtml(
+                tournament.date || "Not set"
+            )}
+
+            <br>
+
+            ⏰
+            ${escapeHtml(
+                tournament.time || "Not set"
+            )}
+
+        `;
+
+
+    document
+        .getElementById(
+            "playerName"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "freeFireUID"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "freeFireName"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "whatsapp"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "joinMessage"
+        )
+        .innerText = "";
+
+
+    document
+        .getElementById(
+            "joinModal"
+        )
+        .style.display =
+        "flex";
 
 }
 
 
-currentTournamentId =
-tournamentId;
+
+/* =================================================
+   CLOSE JOIN
+================================================= */
+
+function closeJoin(){
+
+    document
+        .getElementById(
+            "joinModal"
+        )
+        .style.display =
+        "none";
 
 
-currentTournament = {
-title:tournamentName,
-entry_fee:Number(entryFee || 0)
-};
-
-
-document.getElementById(
-"joinTournamentName"
-).innerText =
-tournamentName;
-
-
-document.getElementById(
-"joinName"
-).value="";
-
-document.getElementById(
-"freeFireUID"
-).value="";
-
-document.getElementById(
-"freeFireName"
-).value="";
-
-document.getElementById(
-"joinWhatsapp"
-).value="";
-
-
-document.getElementById(
-"paymentMethod"
-).value="";
-
-document.getElementById(
-"transactionID"
-).value="";
-
-
-document.getElementById(
-"joinError"
-).style.display="none";
-
-document.getElementById(
-"paymentError"
-).style.display="none";
-
-
-document.getElementById(
-"step1"
-).classList.add("active");
-
-document.getElementById(
-"step2"
-).classList.remove("active");
-
-
-document.getElementById(
-"dot1"
-).classList.add("active");
-
-document.getElementById(
-"dot2"
-).classList.remove("active");
-
-
-document.getElementById(
-"joinModal"
-).style.display="block";
+    currentTournament =
+        null;
 
 }
 
 
-/* =========================================
-NEXT PAYMENT
-========================================= */
 
-function goToPayment(){
-
-const playerName =
-document.getElementById("joinName")
-.value.trim();
-
-const uid =
-document.getElementById("freeFireUID")
-.value.trim();
-
-const freeFireName =
-document.getElementById("freeFireName")
-.value.trim();
-
-const whatsapp =
-document.getElementById("joinWhatsapp")
-.value.trim();
-
-
-const errorBox =
-document.getElementById("joinError");
-
-
-errorBox.style.display="none";
-
-
-if(!playerName){
-
-showError(
-"Player Name দিন।"
-);
-
-return;
-
-}
-
-
-if(!uid){
-
-showError(
-"Free Fire UID দিন।"
-);
-
-return;
-
-}
-
-
-if(!freeFireName){
-
-showError(
-"Free Fire Name দিন।"
-);
-
-return;
-
-}
-
-
-if(!/^01[3-9]\d{8}$/.test(whatsapp)){
-
-showError(
-"সঠিক ১১ সংখ্যার WhatsApp নম্বর দিন।\nউদাহরণ: 01712345678"
-);
-
-return;
-
-}
-
-
-/* PAYMENT PAGE */
-
-document.getElementById(
-"paymentAmount"
-).innerHTML=
-
-"Entry Fee: <span>৳"+
-escapeHtml(
-String(currentTournament?.entry_fee || 0)
-)+
-"</span>";
-
-
-document.getElementById(
-"step1"
-).classList.remove("active");
-
-document.getElementById(
-"step2"
-).classList.add("active");
-
-
-document.getElementById(
-"dot1"
-).classList.remove("active");
-
-document.getElementById(
-"dot2"
-).classList.add("active");
-
-}
-
-
-/* =========================================
-SHOW PAYMENT NUMBER
-========================================= */
-
-function showPaymentNumber(){
-
-const method =
-document.getElementById("paymentMethod")
-.value;
-
-
-document.getElementById(
-"bkashInfo"
-).style.display="none";
-
-document.getElementById(
-"nagadInfo"
-).style.display="none";
-
-
-if(method==="bKash"){
-
-document.getElementById(
-"bkashInfo"
-).style.display="block";
-
-}
-
-
-if(method==="Nagad"){
-
-document.getElementById(
-"nagadInfo"
-).style.display="block";
-
-}
-
-}
-
-
-/* =========================================
-BACK
-========================================= */
-
-function backToPlayerInfo(){
-
-document.getElementById(
-"step2"
-).classList.remove("active");
-
-document.getElementById(
-"step1"
-).classList.add("active");
-
-
-document.getElementById(
-"dot2"
-).classList.remove("active");
-
-document.getElementById(
-"dot1"
-).classList.add("active");
-
-}
-
-
-/* =========================================
-FINAL SUBMIT
-========================================= */
+/* =================================================
+   SUBMIT JOIN
+================================================= */
 
 async function submitJoin(){
 
-const paymentError =
-document.getElementById("paymentError");
+    const message =
+        document.getElementById(
+            "joinMessage"
+        );
 
 
-paymentError.style.display="none";
+    message.style.color =
+        "#aab4c8";
 
 
-const paymentMethod =
-document.getElementById("paymentMethod")
-.value;
+    const playerName =
+        document
+            .getElementById(
+                "playerName"
+            )
+            .value
+            .trim();
 
-const transactionID =
-document.getElementById("transactionID")
-.value.trim();
+
+    const uid =
+        document
+            .getElementById(
+                "freeFireUID"
+            )
+            .value
+            .trim();
 
 
-if(!paymentMethod){
+    const freeFireName =
+        document
+            .getElementById(
+                "freeFireName"
+            )
+            .value
+            .trim();
 
-showPaymentError(
-"Payment Method নির্বাচন করুন।"
-);
 
-return;
+    const whatsapp =
+        document
+            .getElementById(
+                "whatsapp"
+            )
+            .value
+            .trim();
+
+
+    if(!playerName){
+
+        message.innerText =
+            "Player Name দিন।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    if(!uid){
+
+        message.innerText =
+            "Free Fire UID দিন।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    if(!freeFireName){
+
+        message.innerText =
+            "Free Fire Name দিন।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    if(
+        whatsapp &&
+        !/^01[3-9]\d{8}$/.test(
+            whatsapp
+        )
+    ){
+
+        message.innerText =
+            "সঠিক ১১ সংখ্যার WhatsApp নম্বর দিন।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data ||
+        !data.user
+    ){
+
+        message.innerText =
+            "আগে Login করুন।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    const user =
+        data.user;
+
+
+    if(!currentTournament){
+
+        message.innerText =
+            "Tournament পাওয়া যায়নি।";
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "joinSubmitButton"
+        );
+
+
+    button.disabled =
+        true;
+
+    button.innerText =
+        "Joining...";
+
+
+
+    /* =========================================
+       CHECK ALREADY JOINED
+    ========================================= */
+
+    const {
+        data:existing,
+        error:existingError
+    } =
+    await supabaseClient
+
+        .from(
+            "tournament_players"
+        )
+
+        .select("id")
+
+        .eq(
+            "tournament_id",
+            String(
+                currentTournament.id
+            )
+        )
+
+        .eq(
+            "user_id",
+            user.id
+        )
+
+        .maybeSingle();
+
+
+    if(existingError){
+
+        console.error(
+            existingError
+        );
+
+
+        button.disabled =
+            false;
+
+        button.innerText =
+            "✅ Join Tournament";
+
+
+        message.innerText =
+            "তথ্য যাচাই করা যায়নি: " +
+            existingError.message;
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+    if(existing){
+
+        button.disabled =
+            false;
+
+        button.innerText =
+            "✅ Join Tournament";
+
+
+        message.innerText =
+            "আপনি এই Tournament-এ আগেই Join করেছেন।";
+
+        message.style.color =
+            "#ffcc66";
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       INSERT
+    ========================================= */
+
+    const {
+        error:insertError
+    } =
+    await supabaseClient
+
+        .from(
+            "tournament_players"
+        )
+
+        .insert({
+
+            tournament_id:
+                String(
+                    currentTournament.id
+                ),
+
+            user_id:
+                user.id,
+
+            player_name:
+                playerName,
+
+            free_fire_uid:
+                uid,
+
+            free_fire_name:
+                freeFireName,
+
+            whatsapp:
+                whatsapp || null
+
+        });
+
+
+    button.disabled =
+        false;
+
+    button.innerText =
+        "✅ Join Tournament";
+
+
+    if(insertError){
+
+        console.error(
+            insertError
+        );
+
+
+        message.innerText =
+            "Join করা যায়নি: " +
+            insertError.message;
+
+        message.style.color =
+            "#ff7070";
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       SUCCESS
+    ========================================= */
+
+    message.innerText =
+        "🎉 Tournament Join সফল হয়েছে!";
+
+
+    message.style.color =
+        "#5ee69a";
+
+
+    setTimeout(
+        async function(){
+
+            closeJoin();
+
+            await loadMyTournaments();
+
+        },
+        900
+    );
 
 }
 
 
-if(!transactionID){
 
-showPaymentError(
-"Payment করার পর Transaction ID দিন।"
-);
+/* =================================================
+   MY TOURNAMENTS
+================================================= */
 
-return;
+async function loadMyTournaments(){
+
+    const section =
+        document.getElementById(
+            "myTournamentSection"
+        );
+
+
+    const list =
+        document.getElementById(
+            "myTournamentList"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+        error ||
+        !data ||
+        !data.user
+    ){
+
+        section.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    section.style.display =
+        "block";
+
+
+    list.innerHTML = `
+
+        <div class="empty">
+
+            Loading...
+
+        </div>
+
+    `;
+
+
+    const user =
+        data.user;
+
+
+    const {
+        data:joins,
+        error:joinError
+    } =
+    await supabaseClient
+
+        .from(
+            "tournament_players"
+        )
+
+        .select("*")
+
+        .eq(
+            "user_id",
+            user.id
+        )
+
+        .order(
+            "joined_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(joinError){
+
+        console.error(
+            joinError
+        );
+
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                My Tournaments load করা যায়নি।
+
+                <br><br>
+
+                ${escapeHtml(
+                    joinError.message
+                )}
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    if(
+        !joins ||
+        joins.length === 0
+    ){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                আপনি এখনো কোনো Tournament Join করেননি।
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    /* =========================================
+       LOAD TOURNAMENT DATA
+    ========================================= */
+
+    const {
+        data:tournaments,
+        error:tournamentError
+    } =
+    await supabaseClient
+
+        .from("tournaments")
+
+        .select("*");
+
+
+    if(tournamentError){
+
+        console.error(
+            tournamentError
+        );
+
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                Tournament information load করা যায়নি।
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        "";
+
+
+    joins.forEach(
+        function(join){
+
+            const tournament =
+                tournaments.find(
+                    function(item){
+
+                        return String(
+                            item.id
+                        ) === String(
+                            join.tournament_id
+                        );
+
+                    }
+                );
+
+
+            const title =
+                tournament?.title ||
+
+                tournament?.name ||
+
+                "Free Fire Tournament";
+
+
+            const date =
+                tournament?.date ||
+
+                tournament?.tournament_date ||
+
+                tournament?.match_date ||
+
+                tournament?.start_date ||
+
+                "Not set";
+
+
+            const time =
+                tournament?.time ||
+
+                tournament?.tournament_time ||
+
+                tournament?.match_time ||
+
+                tournament?.start_time ||
+
+                "Not set";
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "my-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+
+                    🎮
+                    ${escapeHtml(title)}
+
+                </h3>
+
+
+                <div class="my-info">
+
+                    📅 Date:
+                    ${escapeHtml(date)}
+
+                    <br>
+
+                    ⏰ Time:
+                    ${escapeHtml(time)}
+
+                    <br>
+
+                    👤 Player:
+                    ${escapeHtml(
+                        join.player_name
+                    )}
+
+                    <br>
+
+                    🆔 Free Fire UID:
+                    ${escapeHtml(
+                        join.free_fire_uid
+                    )}
+
+                    <br>
+
+                    🎮 Free Fire Name:
+                    ${escapeHtml(
+                        join.free_fire_name
+                    )}
+
+                    ${
+                        join.whatsapp
+
+                        ?
+
+                        `
+
+                        <br>
+
+                        📱 WhatsApp:
+                        ${escapeHtml(
+                            join.whatsapp
+                        )}
+
+                        `
+
+                        :
+
+                        ""
+
+                    }
+
+                </div>
+
+
+                <span class="joined">
+
+                    ✓ Joined
+
+                </span>
+
+
+                <button
+                    class="delete-btn"
+                    onclick='leaveTournament(${JSON.stringify(
+                        String(
+                            join.id
+                        )
+                    )})'
+                >
+
+                    Leave Tournament
+
+                </button>
+
+            `;
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
-const {
-data:{
-user
-}
-} =
-await supabaseClient.auth.getUser();
+
+/* =================================================
+   LEAVE TOURNAMENT
+================================================= */
+
+async function leaveTournament(
+    joinId
+){
+
+    const confirmLeave =
+        confirm(
+            "আপনি কি এই Tournament থেকে Leave করতে চান?"
+        );
 
 
-if(!user){
+    if(!confirmLeave){
 
-closeJoinModal();
+        return;
 
-openAuth();
-
-return;
-
-}
+    }
 
 
-/* CHECK EXISTING */
+    const {
+        error
+    } =
+    await supabaseClient
 
-const {
-data:existing,
-error:checkError
-} =
-await supabaseClient
-.from("tournament_players")
-.select("id")
-.eq(
-"tournament_id",
-currentTournamentId
-)
-.eq(
-"user_id",
-user.id
-)
-.maybeSingle();
+        .from(
+            "tournament_players"
+        )
+
+        .delete()
+
+        .eq(
+            "id",
+            joinId
+        );
 
 
-if(checkError){
+    if(error){
 
-console.error(checkError);
+        alert(
+            "Leave করা যায়নি: " +
+            error.message
+        );
 
-showPaymentError(
-"তথ্য যাচাই করা যায়নি।"
-);
+        return;
 
-return;
-
-}
+    }
 
 
-if(existing){
-
-showPaymentError(
-"আপনি এই Tournament-এ আগেই Join করেছেন।"
-);
-
-return;
+    await loadMyTournaments();
 
 }
 
 
-/* BUTTON */
 
-const button =
-document.getElementById(
-"finalSubmitButton"
-);
+/* =================================================
+   AUTH STATE
+================================================= */
 
-button.disabled=true;
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        function(){
 
-button.innerText=
-"Submitting...";
+            setTimeout(
+                async function(){
 
+                    await updateAccount();
 
-/* INSERT */
+                    await loadMyTournaments();
 
-const {
-error
-} =
-await supabaseClient
-.from("tournament_players")
-.insert({
+                },
+                0
+            );
 
-tournament_id:
-currentTournamentId,
+        }
+    );
 
-user_id:
-user.id,
 
-player_name:
-document.getElementById(
-"joinName"
-).value.trim(),
 
-whatsapp:
-document.getElementById(
-"joinWhatsapp"
-).value.trim(),
-
-free_fire_uid:
-document.getElementById(
-"freeFireUID"
-).value.trim(),
-
-free_fire_name:
-document.getElementById(
-"freeFireName"
-).value.trim(),
-
-payment_method:
-paymentMethod,
-
-transaction_id:
-transactionID,
-
-payment_status:
-"Pending"
-
-});
-
-
-button.disabled=false;
-
-button.innerText=
-"✅ FINAL SUBMIT";
-
-
-if(error){
-
-console.error(error);
-
-showPaymentError(
-"Submit করা যায়নি:\n"+
-error.message
-);
-
-return;
-
-}
-
-
-/* SUCCESS */
-
-closeJoinModal();
-
-
-document.getElementById(
-"successText"
-).innerText=
-
-"Player Name: "+
-document.getElementById(
-"joinName"
-).value.trim()+
-
-"\nFree Fire UID: "+
-document.getElementById(
-"freeFireUID"
-).value.trim()+
-
-"\nPayment Method: "+
-paymentMethod+
-
-"\nPayment Number: 01759748984"+
-
-"\nTransaction ID: "+
-transactionID+
-
-"\n\nPayment Status: Pending"+
-
-"\n\nAdmin payment verify করার পর Tournament Join confirm হবে।";
-
-
-document.getElementById(
-"successModal"
-).style.display="block";
-
-}
-
-
-/* =========================================
-ERROR
-========================================= */
-
-function showError(text){
-
-const box =
-document.getElementById("joinError");
-
-box.innerText=text;
-
-box.style.display="block";
-
-}
-
-
-function showPaymentError(text){
-
-const box =
-document.getElementById("paymentError");
-
-box.innerText=text;
-
-box.style.display="block";
-
-}
-
-
-/* =========================================
-CLOSE
-========================================= */
-
-function closeJoinModal(){
-
-document.getElementById(
-"joinModal"
-).style.display="none";
-
-currentTournamentId=null;
-
-currentTournament=null;
-
-}
-
-
-function closeSuccess(){
-
-document.getElementById(
-"successModal"
-).style.display="none";
-
-}
-
-
-/* =========================================
-ESCAPE HTML
-========================================= */
-
-function escapeHtml(value){
-
-const div =
-document.createElement("div");
-
-div.textContent =
-value ?? "";
-
-return div.innerHTML;
-
-}
-
-
-/* =========================================
-OUTSIDE CLICK
-========================================= */
+/* =================================================
+   MODAL OUTSIDE CLICK
+================================================= */
 
 window.addEventListener(
-"click",
-function(event){
+    "click",
+    function(event){
 
-if(
-event.target===
-document.getElementById("authModal")
-){
-
-closeAuth();
-
-}
-
-if(
-event.target===
-document.getElementById("joinModal")
-){
-
-closeJoinModal();
-
-}
-
-if(
-event.target===
-document.getElementById("successModal")
-){
-
-closeSuccess();
-
-}
-
-});
+        const authModal =
+            document.getElementById(
+                "authModal"
+            );
 
 
-/* =========================================
-AUTH STATE
-========================================= */
+        const joinModal =
+            document.getElementById(
+                "joinModal"
+            );
 
-supabaseClient.auth.onAuthStateChange(
-()=>{
-setTimeout(
-updateAccount,
-0
+
+        if(
+            event.target ===
+            authModal
+        ){
+
+            closeAuth();
+
+        }
+
+
+        if(
+            event.target ===
+            joinModal
+        ){
+
+            closeJoin();
+
+        }
+
+    }
 );
-});
 
 
-/* =========================================
-START
-========================================= */
 
-loadTournaments();
+/* =================================================
+   START
+================================================= */
 
-updateAccount();
+async function startWebsite(){
+
+    await updateAccount();
+
+    await loadTournaments();
+
+    await loadMyTournaments();
+
+}
+
+
+startWebsite();
+
 
 </script>
 
 </body>
-</html>
+
+  </html>
