@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAM TOURNAMENT ZONE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#070b16;
+  color:white;
+}
+
+header{
+  background:#0d1428;
+  border-bottom:1px solid #29365b;
+  padding:14px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  color:#00e5ff;
+  font-size:18px;
+  font-weight:bold;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.login-btn{
+  background:#00e5ff;
+  color:#001014;
+  padding:10px 14px;
+  border-radius:8px;
+}
+
+.logout-btn{
+  background:#ff4757;
+  color:white;
+  padding:10px 14px;
+  border-radius:8px;
+}
+
+.hero{
+  text-align:center;
+  padding:65px 20px;
+  background:radial-gradient(circle at top,#182b63,#080d1b 65%);
+}
+
+.hero h1{
+  color:#00e5ff;
+  font-size:35px;
+  margin-bottom:12px;
+}
+
+.hero p{
+  color:#cbd5e1;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:35px 15px;
+}
+
+.welcome{
+  text-align:center;
+  color:#b8c2df;
+  margin-bottom:25px;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.tournament-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:#111a33;
+  border:1px solid #293860;
+  border-radius:16px;
+  padding:20px;
+}
+
+.card h3{
+  color:#00e5ff;
+  margin-bottom:15px;
+}
+
+.card p{
+  color:#d7ddf5;
+  margin:10px 0;
+}
+
+.free-fire{
+  display:inline-block;
+  background:#ff8c00;
+  padding:5px 9px;
+  border-radius:6px;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.status{
+  color:#00e676;
+}
+
+.join-btn{
+  width:100%;
+  padding:13px;
+  margin-top:15px;
+  border-radius:9px;
+  background:#00e676;
+  color:#001b0b;
+  font-size:16px;
+}
+
+.loading{
+  text-align:center;
+  color:#9da9c9;
+  padding:30px;
+}
+
+footer{
+  background:#040711;
+  text-align:center;
+  color:#7f8aaa;
+  padding:30px;
+  margin-top:40px;
+}
+
+
+/* MODAL */
+
+.modal,
+.join-modal,
+.payment-modal,
+.success-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,.88);
+  padding:20px;
+  overflow-y:auto;
+}
+
+.box{
+  width:100%;
+  max-width:440px;
+  margin:35px auto;
+  background:#111a33;
+  border:1px solid #34436f;
+  border-radius:17px;
+  padding:25px;
+}
+
+.box h2{
+  text-align:center;
+  color:#00e5ff;
+  margin-bottom:20px;
+}
+
+input,
+select{
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border-radius:9px;
+  border:1px solid #394873;
+  background:#080d1b;
+  color:white;
+  outline:none;
+  font-size:15px;
+}
+
+input:focus,
+select:focus{
+  border-color:#00e5ff;
+}
+
+select option{
+  background:#080d1b;
+  color:white;
+}
+
+label{
+  display:block;
+  margin-bottom:7px;
+  color:#d7ddf5;
+  font-weight:bold;
+}
+
+.primary{
+  width:100%;
+  padding:14px;
+  border-radius:9px;
+  background:#00e5ff;
+  color:#001014;
+  font-size:15px;
+}
+
+.secondary{
+  width:100%;
+  padding:13px;
+  border-radius:9px;
+  background:#303a5f;
+  color:white;
+  margin-top:10px;
+}
+
+.switch{
+  text-align:center;
+  color:#00e5ff;
+  margin-top:16px;
+  cursor:pointer;
+}
+
+.message{
+  text-align:center;
+  color:#ffd166;
+  margin-top:12px;
+  font-size:14px;
+}
+
+
+/* JOIN STEPS */
+
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
+
+.step-title{
+  text-align:center;
+  color:#00e5ff;
+  margin-bottom:8px;
+}
+
+.step-subtitle{
+  text-align:center;
+  color:#aeb8d8;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+.step-indicator{
+  display:flex;
+  gap:7px;
+  margin-bottom:22px;
+}
+
+.step-dot{
+  flex:1;
+  height:5px;
+  background:#303a5f;
+  border-radius:10px;
+}
+
+.step-dot.active{
+  background:#00e5ff;
+}
+
+.tournament-name{
+  background:#080d1b;
+  border:1px solid #293860;
+  padding:12px;
+  border-radius:9px;
+  margin-bottom:18px;
+  text-align:center;
+  color:#00e676;
+  font-weight:bold;
+}
+
+
+/* PAYMENT */
+
+.payment-card{
+  background:#080d1b;
+  border:1px solid #293860;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+.payment-card h3{
+  margin-bottom:7px;
+}
+
+.bkash{
+  color:#ff4f9a;
+}
+
+.nagad{
+  color:#ff9f1c;
+}
+
+.number{
+  color:#00e676;
+  font-size:21px;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin:7px 0;
+}
+
+.payment-note{
+  color:#9da9c9;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.amount-box{
+  background:#10223a;
+  border:1px solid #00e5ff;
+  padding:13px;
+  border-radius:10px;
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.amount-box span{
+  color:#00e676;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.error-box{
+  display:none;
+  background:#3b1620;
+  border:1px solid #7d2938;
+  color:#ff9aa6;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:14px;
+  white-space:pre-line;
+}
+
+
+/* SUCCESS */
+
+.success{
+  text-align:center;
+  border-color:#00e676;
+}
+
+.success-icon{
+  font-size:55px;
+}
+
+.success h2{
+  color:#00e676;
+  margin:10px 0;
+}
+
+.success p{
+  color:#d7ddf5;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+@media(max-width:600px){
+
+  .logo{
+    font-size:14px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .box{
+    margin:20px auto;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<header>
+<div class="header">
+
+<div class="logo">
+🎮 MAM TOURNAMENT ZONE
+</div>
+
+<div id="accountArea">
+
+<button class="login-btn" onclick="openAuth()">
+Login / Register
+</button>
+
+</div>
+
+</div>
+</header>
+
+
+<section class="hero">
+
+<h1>
+🔥 MAM TOURNAMENT ZONE
+</h1>
+
+<p>
+FREE FIRE TOURNAMENT PLATFORM
+</p>
+
+</section>
+
+
+<div class="container">
+
+<div id="welcome" class="welcome"></div>
+
+<h2 class="section-title">
+🎮 Free Fire Tournaments
+</h2>
+
+<div id="tournamentList" class="tournament-grid">
+
+<div class="loading">
+Tournament loading...
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 MAM TOURNAMENT ZONE
+
+</footer>
+
+
+<!-- LOGIN -->
+
+<div id="authModal" class="modal">
+
+<div class="box">
+
+<h2 id="authTitle">
+Login
+</h2>
+
+<input
+id="nameInput"
+type="text"
+placeholder="আপনার নাম"
+style="display:none"
+>
+
+<input
+id="emailInput"
+type="email"
+placeholder="Email"
+>
+
+<input
+id="passwordInput"
+type="password"
+placeholder="Password"
+>
+
+<button
+id="authButton"
+class="primary"
+onclick="handleAuth()">
+Login
+</button>
+
+<div id="message" class="message"></div>
+
+<button
+class="secondary"
+onclick="closeAuth()">
+Close
+</button>
+
+<div
+id="switchText"
+class="switch"
+onclick="switchAuth()">
+Create Account
+</div>
+
+</div>
+</div>
+
+
+<!-- JOIN MODAL -->
+
+<div id="joinModal" class="join-modal">
+
+<div class="box">
+
+<div class="step-indicator">
+
+<div id="dot1" class="step-dot active"></div>
+<div id="dot2" class="step-dot"></div>
+
+</div>
+
+
+<!-- STEP 1 -->
+
+<div id="step1" class="step active">
+
+<h2 class="step-title">
+🎮 Tournament Join
+</h2>
+
+<div class="step-subtitle">
+প্রথমে আপনার Player তথ্য দিন
+</div>
+
+<div
+id="joinTournamentName"
+class="tournament-name">
+</div>
+
+
+<div id="joinError" class="error-box"></div>
+
+
+<label>
+Player Name
+</label>
+
+<input
+id="joinName"
+type="text"
+placeholder="আপনার নাম"
+>
+
+
+<label>
+Free Fire UID
+</label>
+
+<input
+id="freeFireUID"
+type="text"
+placeholder="Free Fire UID"
+inputmode="numeric"
+>
+
+
+<label>
+Free Fire Name
+</label>
+
+<input
+id="freeFireName"
+type="text"
+placeholder="Free Fire Name"
+>
+
+
+<label>
+WhatsApp Number
+</label>
+
+<input
+id="joinWhatsapp"
+type="tel"
+placeholder="017XXXXXXXX"
+maxlength="11"
+inputmode="numeric"
+>
+
+
+<button
+class="primary"
+onclick="goToPayment()">
+
+➡️ NEXT: PAYMENT
+
+</button>
+
+<button
+class="secondary"
+onclick="closeJoinModal()">
+
+Cancel
+
+</button>
+
+</div>
+
+
+<!-- STEP 2 PAYMENT -->
+
+<div id="step2" class="step">
+
+<h2 class="step-title">
+💳 Payment
+</h2>
+
+<div class="step-subtitle">
+Payment Method নির্বাচন করুন
+</div>
+
+
+<div
+id="paymentAmount"
+class="amount-box">
+Entry Fee:
+<span>৳0</span>
+</div>
+
+
+<label>
+Payment Method
+</label>
+
+<select
+id="paymentMethod"
+onchange="showPaymentNumber()">
+
+<option value="">
+Payment Method Select করুন
+</option>
+
+<option value="bKash">
+bKash
+</option>
+
+<option value="Nagad">
+Nagad
+</option>
+
+</select>
+
+
+<!-- BKASH -->
+
+<div
+id="bkashInfo"
+class="payment-card"
+style="display:none">
+
+<h3 class="bkash">
+bKash
+</h3>
+
+<div>
+Send Money Number:
+</div>
+
+<div class="number">
+01759748984
+</div>
+
+<div class="payment-note">
+উপরের bKash নম্বরে Entry Fee Send Money করুন।
+তারপর নিচে Transaction ID দিন।
+</div>
+
+</div>
+
+
+<!-- NAGAD -->
+
+<div
+id="nagadInfo"
+class="payment-card"
+style="display:none">
+
+<h3 class="nagad">
+Nagad
+</h3>
+
+<div>
+Send Money Number:
+</div>
+
+<div class="number">
+01759748984
+</div>
+
+<div class="payment-note">
+উপরের Nagad নম্বরে Entry Fee Send Money করুন।
+তারপর নিচে Transaction ID দিন।
+</div>
+
+</div>
+
+
+<label>
+Transaction ID
+</label>
+
+<input
+id="transactionID"
+type="text"
+placeholder="Payment করার পর Transaction ID"
+>
+
+
+<div id="paymentError" class="error-box"></div>
+
+
+<button
+id="finalSubmitButton"
+class="primary"
+onclick="submitJoin()">
+
+✅ FINAL SUBMIT
+
+</button>
+
+<button
+class="secondary"
+onclick="backToPlayerInfo()">
+
+⬅️ Back
+
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- SUCCESS -->
+
+<div id="successModal" class="success-modal">
+
+<div class="box success">
+
+<div class="success-icon">
+✅
+</div>
+
+<h2>
+Join Request Submitted
+</h2>
+
+<p id="successText"></p>
+
+<button
+class="primary"
+onclick="closeSuccess()">
+
+Done
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://gxnijfjzigbxvibgtvwj.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_kegdIDq_ppqQF302sJXVWA_v_fzHc7E";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* =========================================
+VARIABLES
+========================================= */
+
+let authMode = "login";
+
+let currentTournamentId = null;
+
+let currentTournament = null;
+
+
+/* =========================================
+AUTH
+========================================= */
+
+function openAuth(){
+
+document.getElementById("authModal")
+.style.display="block";
+
+authMode="login";
+
+updateAuthBox();
+
+}
+
+
+function closeAuth(){
+
+document.getElementById("authModal")
+.style.display="none";
+
+document.getElementById("message")
+.innerText="";
+
+}
+
+
+function switchAuth(){
+
+authMode =
+authMode==="login"
+? "register"
+: "login";
+
+updateAuthBox();
+
+}
+
+
+function updateAuthBox(){
+
+const title =
+document.getElementById("authTitle");
+
+const button =
+document.getElementById("authButton");
+
+const name =
+document.getElementById("nameInput");
+
+const switchText =
+document.getElementById("switchText");
+
+
+if(authMode==="login"){
+
+title.innerText="Login";
+
+button.innerText="Login";
+
+name.style.display="none";
+
+switchText.innerText=
+"Create Account";
+
+}else{
+
+title.innerText=
+"Create Account";
+
+button.innerText=
+"Register";
+
+name.style.display="block";
+
+switchText.innerText=
+"Already have an account? Login";
+
+}
+
+}
+
+
+/* =========================================
+LOGIN / REGISTER
+========================================= */
+
+async function handleAuth(){
+
+const message =
+document.getElementById("message");
+
+const email =
+document.getElementById("emailInput")
+.value.trim();
+
+const password =
+document.getElementById("passwordInput")
+.value;
+
+const name =
+document.getElementById("nameInput")
+.value.trim();
+
+
+message.innerText="";
+
+
+if(!email || !password){
+
+message.innerText=
+"Email এবং Password দিন।";
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+message.innerText=
+"Password কমপক্ষে ৬ অক্ষরের হতে হবে।";
+
+return;
+
+}
+
+
+try{
+
+if(authMode==="register"){
+
+if(!name){
+
+message.innerText=
+"আপনার নাম দিন।";
+
+return;
+
+}
+
+
+message.innerText=
+"Account তৈরি হচ্ছে...";
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.signUp({
+
+email:email,
+
+password:password,
+
+options:{
+data:{
+name:name
+}
+}
+
+});
+
+
+if(error){
+
+message.innerText=
+error.message;
+
+return;
+
+}
+
+
+if(data.user && !data.session){
+
+message.innerText=
+"Registration সফল। Email verify করুন।";
+
+return;
+
+}
+
+
+message.innerText=
+"Registration সফল হয়েছে!";
+
+
+setTimeout(()=>{
+
+closeAuth();
+
+updateAccount();
+
+},800);
+
+return;
+
+}
+
+
+/* LOGIN */
+
+message.innerText=
+"Login হচ্ছে...";
+
+
+const {
+error
+} =
+await supabaseClient.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+if(error){
+
+message.innerText=
+error.message;
+
+return;
+
+}
+
+
+message.innerText=
+"Login সফল হয়েছে!";
+
+
+setTimeout(()=>{
+
+closeAuth();
+
+updateAccount();
+
+},700);
+
+
+}catch(error){
+
+console.error(error);
+
+message.innerText=
+"Failed to fetch — Supabase connection পরীক্ষা করুন।";
+
+}
+
+}
+
+
+/* =========================================
+ACCOUNT
+========================================= */
+
+async function updateAccount(){
+
+const {
+data:{
+user
+}
+} =
+await supabaseClient.auth.getUser();
+
+
+const account =
+document.getElementById("accountArea");
+
+const welcome =
+document.getElementById("welcome");
+
+
+if(!user){
+
+account.innerHTML=`
+
+<button
+class="login-btn"
+onclick="openAuth()">
+Login / Register
+</button>
+
+`;
+
+welcome.innerText="";
+
+return;
+
+}
+
+
+const name =
+user.user_metadata?.name ||
+user.email?.split("@")[0] ||
+"Player";
+
+
+account.innerHTML=`
+
+<span style="margin-right:7px">
+👤 ${escapeHtml(name)}
+</span>
+
+<button
+class="logout-btn"
+onclick="logout()">
+Logout
+</button>
+
+`;
+
+welcome.innerText=
+"Welcome, "+name+" 👋";
+
+}
+
+
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
+updateAccount();
+
+}
+
+
+/* =========================================
+LOAD TOURNAMENTS
+========================================= */
+
+async function loadTournaments(){
+
+const list =
+document.getElementById("tournamentList");
+
+
+try{
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("tournaments")
+.select("*")
+.eq("game","Free Fire")
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(error){
+
+console.error(error);
+
+list.innerHTML=
+'<div class="loading">Tournament load করা যায়নি।</div>';
+
+return;
+
+}
+
+
+if(!data || data.length===0){
+
+list.innerHTML=
+'<div class="loading">এখন কোনো Free Fire Tournament নেই।</div>';
+
+return;
+
+}
+
+
+list.innerHTML="";
+
+
+data.forEach(tournament=>{
+
+const card =
+document.createElement("div");
+
+card.className="card";
+
+
+card.innerHTML=`
+
+<div class="free-fire">
+FREE FIRE
+</div>
+
+<h3>
+🔥 ${escapeHtml(tournament.title)}
+</h3>
+
+<p>
+📅 Date:
+${escapeHtml(tournament.date || "-")}
+</p>
+
+<p>
+⏰ Time:
+${escapeHtml(tournament.time || "-")}
+</p>
+
+<p>
+💰 Entry Fee:
+৳${escapeHtml(
+String(tournament.entry_fee ?? 0)
+)}
+</p>
+
+<p>
+🏆 Prize Pool:
+৳${escapeHtml(
+String(tournament.prize_pool ?? 0)
+)}
+</p>
+
+<p>
+👥 Max Players:
+${escapeHtml(
+String(tournament.max_players ?? 0)
+)}
+</p>
+
+<p>
+📌 Status:
+<span class="status">
+${escapeHtml(
+tournament.status || "Open"
+)}
+</span>
+</p>
+
+<button
+class="join-btn"
+onclick='openJoinModal(
+${tournament.id},
+${JSON.stringify(tournament.title || "")},
+${Number(tournament.entry_fee || 0)}
+)'>
+
+🎮 JOIN TOURNAMENT
+
+</button>
+
+`;
+
+list.appendChild(card);
+
+});
+
+}catch(error){
+
+console.error(error);
+
+list.innerHTML=
+'<div class="loading">Connection error।</div>';
+
+}
+
+}
+
+
+/* =========================================
+OPEN JOIN
+========================================= */
+
+async function openJoinModal(
+tournamentId,
+tournamentName,
+entryFee
+){
+
+const {
+data:{
+user
+}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+alert(
+"আগে Login করুন।"
+);
+
+openAuth();
+
+return;
+
+}
+
+
+currentTournamentId =
+tournamentId;
+
+
+currentTournament = {
+title:tournamentName,
+entry_fee:Number(entryFee || 0)
+};
+
+
+document.getElementById(
+"joinTournamentName"
+).innerText =
+tournamentName;
+
+
+document.getElementById(
+"joinName"
+).value="";
+
+document.getElementById(
+"freeFireUID"
+).value="";
+
+document.getElementById(
+"freeFireName"
+).value="";
+
+document.getElementById(
+"joinWhatsapp"
+).value="";
+
+
+document.getElementById(
+"paymentMethod"
+).value="";
+
+document.getElementById(
+"transactionID"
+).value="";
+
+
+document.getElementById(
+"joinError"
+).style.display="none";
+
+document.getElementById(
+"paymentError"
+).style.display="none";
+
+
+document.getElementById(
+"step1"
+).classList.add("active");
+
+document.getElementById(
+"step2"
+).classList.remove("active");
+
+
+document.getElementById(
+"dot1"
+).classList.add("active");
+
+document.getElementById(
+"dot2"
+).classList.remove("active");
+
+
+document.getElementById(
+"joinModal"
+).style.display="block";
+
+}
+
+
+/* =========================================
+NEXT PAYMENT
+========================================= */
+
+function goToPayment(){
+
+const playerName =
+document.getElementById("joinName")
+.value.trim();
+
+const uid =
+document.getElementById("freeFireUID")
+.value.trim();
+
+const freeFireName =
+document.getElementById("freeFireName")
+.value.trim();
+
+const whatsapp =
+document.getElementById("joinWhatsapp")
+.value.trim();
+
+
+const errorBox =
+document.getElementById("joinError");
+
+
+errorBox.style.display="none";
+
+
+if(!playerName){
+
+showError(
+"Player Name দিন।"
+);
+
+return;
+
+}
+
+
+if(!uid){
+
+showError(
+"Free Fire UID দিন।"
+);
+
+return;
+
+}
+
+
+if(!freeFireName){
+
+showError(
+"Free Fire Name দিন।"
+);
+
+return;
+
+}
+
+
+if(!/^01[3-9]\d{8}$/.test(whatsapp)){
+
+showError(
+"সঠিক ১১ সংখ্যার WhatsApp নম্বর দিন।\nউদাহরণ: 01712345678"
+);
+
+return;
+
+}
+
+
+/* PAYMENT PAGE */
+
+document.getElementById(
+"paymentAmount"
+).innerHTML=
+
+"Entry Fee: <span>৳"+
+escapeHtml(
+String(currentTournament?.entry_fee || 0)
+)+
+"</span>";
+
+
+document.getElementById(
+"step1"
+).classList.remove("active");
+
+document.getElementById(
+"step2"
+).classList.add("active");
+
+
+document.getElementById(
+"dot1"
+).classList.remove("active");
+
+document.getElementById(
+"dot2"
+).classList.add("active");
+
+}
+
+
+/* =========================================
+SHOW PAYMENT NUMBER
+========================================= */
+
+function showPaymentNumber(){
+
+const method =
+document.getElementById("paymentMethod")
+.value;
+
+
+document.getElementById(
+"bkashInfo"
+).style.display="none";
+
+document.getElementById(
+"nagadInfo"
+).style.display="none";
+
+
+if(method==="bKash"){
+
+document.getElementById(
+"bkashInfo"
+).style.display="block";
+
+}
+
+
+if(method==="Nagad"){
+
+document.getElementById(
+"nagadInfo"
+).style.display="block";
+
+}
+
+}
+
+
+/* =========================================
+BACK
+========================================= */
+
+function backToPlayerInfo(){
+
+document.getElementById(
+"step2"
+).classList.remove("active");
+
+document.getElementById(
+"step1"
+).classList.add("active");
+
+
+document.getElementById(
+"dot2"
+).classList.remove("active");
+
+document.getElementById(
+"dot1"
+).classList.add("active");
+
+}
+
+
+/* =========================================
+FINAL SUBMIT
+========================================= */
+
+async function submitJoin(){
+
+const paymentError =
+document.getElementById("paymentError");
+
+
+paymentError.style.display="none";
+
+
+const paymentMethod =
+document.getElementById("paymentMethod")
+.value;
+
+const transactionID =
+document.getElementById("transactionID")
+.value.trim();
+
+
+if(!paymentMethod){
+
+showPaymentError(
+"Payment Method নির্বাচন করুন।"
+);
+
+return;
+
+}
+
+
+if(!transactionID){
+
+showPaymentError(
+"Payment করার পর Transaction ID দিন।"
+);
+
+return;
+
+}
+
+
+const {
+data:{
+user
+}
+} =
+await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+closeJoinModal();
+
+openAuth();
+
+return;
+
+}
+
+
+/* CHECK EXISTING */
+
+const {
+data:existing,
+error:checkError
+} =
+await supabaseClient
+.from("tournament_players")
+.select("id")
+.eq(
+"tournament_id",
+currentTournamentId
+)
+.eq(
+"user_id",
+user.id
+)
+.maybeSingle();
+
+
+if(checkError){
+
+console.error(checkError);
+
+showPaymentError(
+"তথ্য যাচাই করা যায়নি।"
+);
+
+return;
+
+}
+
+
+if(existing){
+
+showPaymentError(
+"আপনি এই Tournament-এ আগেই Join করেছেন।"
+);
+
+return;
+
+}
+
+
+/* BUTTON */
+
+const button =
+document.getElementById(
+"finalSubmitButton"
+);
+
+button.disabled=true;
+
+button.innerText=
+"Submitting...";
+
+
+/* INSERT */
+
+const {
+error
+} =
+await supabaseClient
+.from("tournament_players")
+.insert({
+
+tournament_id:
+currentTournamentId,
+
+user_id:
+user.id,
+
+player_name:
+document.getElementById(
+"joinName"
+).value.trim(),
+
+whatsapp:
+document.getElementById(
+"joinWhatsapp"
+).value.trim(),
+
+free_fire_uid:
+document.getElementById(
+"freeFireUID"
+).value.trim(),
+
+free_fire_name:
+document.getElementById(
+"freeFireName"
+).value.trim(),
+
+payment_method:
+paymentMethod,
+
+transaction_id:
+transactionID,
+
+payment_status:
+"Pending"
+
+});
+
+
+button.disabled=false;
+
+button.innerText=
+"✅ FINAL SUBMIT";
+
+
+if(error){
+
+console.error(error);
+
+showPaymentError(
+"Submit করা যায়নি:\n"+
+error.message
+);
+
+return;
+
+}
+
+
+/* SUCCESS */
+
+closeJoinModal();
+
+
+document.getElementById(
+"successText"
+).innerText=
+
+"Player Name: "+
+document.getElementById(
+"joinName"
+).value.trim()+
+
+"\nFree Fire UID: "+
+document.getElementById(
+"freeFireUID"
+).value.trim()+
+
+"\nPayment Method: "+
+paymentMethod+
+
+"\nPayment Number: 01759748984"+
+
+"\nTransaction ID: "+
+transactionID+
+
+"\n\nPayment Status: Pending"+
+
+"\n\nAdmin payment verify করার পর Tournament Join confirm হবে।";
+
+
+document.getElementById(
+"successModal"
+).style.display="block";
+
+}
+
+
+/* =========================================
+ERROR
+========================================= */
+
+function showError(text){
+
+const box =
+document.getElementById("joinError");
+
+box.innerText=text;
+
+box.style.display="block";
+
+}
+
+
+function showPaymentError(text){
+
+const box =
+document.getElementById("paymentError");
+
+box.innerText=text;
+
+box.style.display="block";
+
+}
+
+
+/* =========================================
+CLOSE
+========================================= */
+
+function closeJoinModal(){
+
+document.getElementById(
+"joinModal"
+).style.display="none";
+
+currentTournamentId=null;
+
+currentTournament=null;
+
+}
+
+
+function closeSuccess(){
+
+document.getElementById(
+"successModal"
+).style.display="none";
+
+}
+
+
+/* =========================================
+ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+value ?? "";
+
+return div.innerHTML;
+
+}
+
+
+/* =========================================
+OUTSIDE CLICK
+========================================= */
+
+window.addEventListener(
+"click",
+function(event){
+
+if(
+event.target===
+document.getElementById("authModal")
+){
+
+closeAuth();
+
+}
+
+if(
+event.target===
+document.getElementById("joinModal")
+){
+
+closeJoinModal();
+
+}
+
+if(
+event.target===
+document.getElementById("successModal")
+){
+
+closeSuccess();
+
+}
+
+});
+
+
+/* =========================================
+AUTH STATE
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+()=>{
+setTimeout(
+updateAccount,
+0
+);
+});
+
+
+/* =========================================
+START
+========================================= */
+
+loadTournaments();
+
+updateAccount();
+
+</script>
+
+</body>
+</html>

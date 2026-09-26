@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MAM TOURNAMENT ZONE - Admin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#070b16;
+    color:#fff;
+}
+
+header{
+    background:#0d1428;
+    border-bottom:1px solid #29365b;
+    padding:15px;
+}
+
+.header{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#00e5ff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 15px;
+}
+
+.login-box{
+    width:calc(100% - 30px);
+    max-width:420px;
+    margin:70px auto;
+    background:#111a33;
+    border:1px solid #34436f;
+    border-radius:16px;
+    padding:25px;
+}
+
+.login-box h1{
+    text-align:center;
+    color:#00e5ff;
+    margin-bottom:10px;
+}
+
+.login-info{
+    text-align:center;
+    color:#9da9c9;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+label{
+    display:block;
+    color:#dbe4ff;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    background:#080d1b;
+    color:#fff;
+    border:1px solid #394873;
+    border-radius:9px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#00e5ff;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:12px 16px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.login-button{
+    width:100%;
+    background:#00e5ff;
+    color:#001014;
+    font-size:16px;
+}
+
+.login-button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.logout{
+    background:#ff4757;
+    color:#fff;
+}
+
+.green{
+    background:#00e676;
+    color:#001b0b;
+}
+
+.red{
+    background:#ff4757;
+    color:#fff;
+}
+
+.gray{
+    background:#303a5f;
+    color:#fff;
+}
+
+.message{
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    line-height:1.6;
+    white-space:pre-line;
+    display:none;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.error{
+    background:#35151d;
+    color:#ff9ba8;
+    border:1px solid #71303c;
+}
+
+.message.success{
+    background:#102d21;
+    color:#5dffa8;
+    border:1px solid #236b49;
+}
+
+.message.loading{
+    background:#10253a;
+    color:#6ee7ff;
+    border:1px solid #24536a;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.card{
+    background:#111a33;
+    border:1px solid #293860;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    color:#00e5ff;
+    margin-bottom:20px;
+}
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+    margin-top:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th,
+td{
+    padding:11px;
+    border-bottom:1px solid #293860;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    color:#00e5ff;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:6px;
+    background:#273456;
+}
+
+.action{
+    margin:2px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:14px;
+    }
+
+    .login-box{
+        margin-top:40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+🎮 MAM TOURNAMENT ZONE ADMIN
+</div>
+
+<button
+id="logoutBtn"
+class="logout hidden"
+type="button"
+onclick="logout()">
+
+Logout
+
+</button>
+
+</div>
+
+</header>
+
+
+<!-- ================= LOGIN PAGE ================= -->
+
+<div id="loginPage">
+
+<div class="login-box">
+
+<h1>
+🔐 Admin Login
+</h1>
+
+<div class="login-info">
+MAM TOURNAMENT ZONE Admin Panel
+</div>
+
+
+<label>
+Email
+</label>
+
+<input
+id="email"
+type="email"
+value="mdnirob748984@gmail.com"
+placeholder="Admin Email"
+autocomplete="email"
+>
+
+
+<label>
+Password
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="আপনার Supabase Password"
+autocomplete="current-password"
+>
+
+
+<button
+id="loginButton"
+type="button"
+class="login-button"
+onclick="adminLogin()">
+
+🔐 LOGIN
+
+</button>
+
+
+<div
+id="loginMessage"
+class="message">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= ADMIN PAGE ================= -->
+
+<div
+id="adminPage"
+class="hidden">
+
+<div class="container">
+
+<h1 style="color:#00e5ff;margin-bottom:25px;">
+📊 Admin Dashboard
+</h1>
+
+
+<!-- ADD TOURNAMENT -->
+
+<div class="card">
+
+<h2>
+➕ Add Free Fire Tournament
+</h2>
+
+
+<label>
+Tournament Name
+</label>
+
+<input
+id="title"
+type="text"
+placeholder="MAM Friday Tournament"
+>
+
+
+<label>
+Date
+</label>
+
+<input
+id="date"
+type="date"
+>
+
+
+<label>
+Time
+</label>
+
+<input
+id="time"
+type="time"
+>
+
+
+<label>
+Entry Fee
+</label>
+
+<input
+id="entryFee"
+type="number"
+placeholder="50"
+>
+
+
+<label>
+Prize Pool
+</label>
+
+<input
+id="prizePool"
+type="number"
+placeholder="1000"
+>
+
+
+<label>
+Maximum Players
+</label>
+
+<input
+id="maxPlayers"
+type="number"
+placeholder="48"
+>
+
+
+<label>
+Status
+</label>
+
+<select id="status">
+
+<option value="Open">
+Open
+</option>
+
+<option value="Closed">
+Closed
+</option>
+
+</select>
+
+
+<button
+type="button"
+class="green"
+onclick="addTournament()">
+
+➕ ADD TOURNAMENT
+
+</button>
+
+
+<div
+id="tournamentMessage"
+class="message">
+</div>
+
+</div>
+
+
+<!-- TOURNAMENT LIST -->
+
+<div class="card">
+
+<h2>
+🎮 Tournament List
+</h2>
+
+<button
+type="button"
+class="gray"
+onclick="loadTournaments()">
+
+🔄 Refresh
+
+</button>
+
+
+<div
+id="tournamentTable"
+class="table-wrap">
+
+Loading...
+
+</div>
+
+</div>
+
+
+<!-- PLAYER LIST -->
+
+<div class="card">
+
+<h2>
+👥 Players & Payments
+</h2>
+
+<button
+type="button"
+class="gray"
+onclick="loadPlayers()">
+
+🔄 Refresh Players
+
+</button>
+
+
+<div
+id="playerTable"
+class="table-wrap">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+"https://gxnijfjzigbxvibgtvwj.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_kegdIDq_ppqQF302sJXVWA_v_fzHc7E";
+
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+===================================================== */
+
+let supabaseClient = null;
+
+
+function initializeSupabase(){
+
+    try{
+
+        if(
+            !window.supabase ||
+            typeof window.supabase.createClient !== "function"
+        ){
+
+            showLoginMessage(
+                "Supabase library load হয়নি। Internet connection চেক করুন।",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        return true;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showLoginMessage(
+            "Supabase শুরু করা যায়নি:\n"+error.message,
+            "error"
+        );
+
+        return false;
+    }
+}
+
+
+/* =====================================================
+   LOGIN MESSAGE
+===================================================== */
+
+function showLoginMessage(text,type){
+
+    const box =
+        document.getElementById("loginMessage");
+
+
+    box.className =
+        "message show "+type;
+
+
+    box.innerText =
+        text;
+}
+
+
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
+
+async function adminLogin(){
+
+    const button =
+        document.getElementById("loginButton");
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    /* BUTTON TEST */
+
+    showLoginMessage(
+        "⏳ Login হচ্ছে...",
+        "loading"
+    );
+
+
+    if(!supabaseClient){
+
+        const ready =
+            initializeSupabase();
+
+
+        if(!ready){
+
+            return;
+        }
+    }
+
+
+    if(!email){
+
+        showLoginMessage(
+            "❌ Email লিখুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!password){
+
+        showLoginMessage(
+            "❌ Password লিখুন।",
+            "error"
+        );
+
+        return;
+    }
+
+
+    button.disabled=true;
+
+    button.innerText=
+        "LOGIN হচ্ছে...";
+
+
+    try{
+
+        /* =====================================
+           SUPABASE AUTH LOGIN
+        ===================================== */
+
+        const result =
+            await supabaseClient
+            .auth
+            .signInWithPassword({
+
+                email:email,
+
+                password:password
+
+            });
+
+
+        const data =
+            result.data;
+
+        const error =
+            result.error;
+
+
+        console.log(
+            "LOGIN RESULT:",
+            result
+        );
+
+
+        /* LOGIN ERROR */
+
+        if(error){
+
+            console.error(
+                "SUPABASE LOGIN ERROR:",
+                error
+            );
+
+
+            showLoginMessage(
+                "❌ Login হয়নি:\n"+
+                error.message,
+                "error"
+            );
+
+
+            button.disabled=false;
+
+            button.innerText=
+                "🔐 LOGIN";
+
+            return;
+        }
+
+
+        if(
+            !data ||
+            !data.user
+        ){
+
+            showLoginMessage(
+                "❌ User পাওয়া যায়নি।",
+                "error"
+            );
+
+
+            button.disabled=false;
+
+            button.innerText=
+                "🔐 LOGIN";
+
+            return;
+        }
+
+
+        /* =====================================
+           CHECK ADMIN TABLE
+        ===================================== */
+
+        showLoginMessage(
+            "⏳ Admin account যাচাই হচ্ছে...",
+            "loading"
+        );
+
+
+        const adminResult =
+            await supabaseClient
+            .from("admins")
+            .select("user_id")
+            .eq(
+                "user_id",
+                data.user.id
+            )
+            .maybeSingle();
+
+
+        console.log(
+            "ADMIN RESULT:",
+            adminResult
+        );
+
+
+        if(adminResult.error){
+
+            console.error(
+                "ADMIN ERROR:",
+                adminResult.error
+            );
+
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+
+            showLoginMessage(
+                "❌ Admin যাচাই করা যায়নি:\n"+
+                adminResult.error.message,
+                "error"
+            );
+
+
+            button.disabled=false;
+
+            button.innerText=
+                "🔐 LOGIN";
+
+            return;
+        }
+
+
+        if(!adminResult.data){
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+
+            showLoginMessage(
+                "❌ এই Email Admin হিসেবে যোগ করা নেই।",
+                "error"
+            );
+
+
+            button.disabled=false;
+
+            button.innerText=
+                "🔐 LOGIN";
+
+            return;
+        }
+
+
+        /* =====================================
+           LOGIN SUCCESS
+        ===================================== */
+
+        showLoginMessage(
+            "✅ Login সফল! Admin Panel খুলছে...",
+            "success"
+        );
+
+
+        setTimeout(
+            function(){
+
+                document
+                .getElementById(
+                    "loginPage"
+                )
+                .classList
+                .add("hidden");
+
+
+                document
+                .getElementById(
+                    "adminPage"
+                )
+                .classList
+                .remove("hidden");
+
+
+                document
+                .getElementById(
+                    "logoutBtn"
+                )
+                .classList
+                .remove("hidden");
+
+
+                button.disabled=false;
+
+                button.innerText=
+                    "🔐 LOGIN";
+
+
+                loadTournaments();
+
+                loadPlayers();
+
+            },
+            700
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "LOGIN JAVASCRIPT ERROR:",
+            error
+        );
+
+
+        showLoginMessage(
+            "❌ Error হয়েছে:\n"+
+            error.message,
+            "error"
+        );
+
+
+        button.disabled=false;
+
+        button.innerText=
+            "🔐 LOGIN";
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout(){
+
+    if(!supabaseClient){
+
+        location.reload();
+
+        return;
+    }
+
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    location.reload();
+}
+
+
+/* =====================================================
+   ADD TOURNAMENT
+===================================================== */
+
+async function addTournament(){
+
+    const message =
+        document.getElementById(
+            "tournamentMessage"
+        );
+
+
+    const title =
+        document.getElementById(
+            "title"
+        ).value.trim();
+
+
+    const date =
+        document.getElementById(
+            "date"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "time"
+        ).value;
+
+
+    const entryFee =
+        Number(
+            document.getElementById(
+                "entryFee"
+            ).value || 0
+        );
+
+
+    const prizePool =
+        Number(
+            document.getElementById(
+                "prizePool"
+            ).value || 0
+        );
+
+
+    const maxPlayers =
+        Number(
+            document.getElementById(
+                "maxPlayers"
+            ).value || 0
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        ).value;
+
+
+    if(!title){
+
+        message.className=
+            "message show error";
+
+        message.innerText=
+            "Tournament Name দিন।";
+
+        return;
+    }
+
+
+    message.className=
+        "message show loading";
+
+    message.innerText=
+        "Tournament Save হচ্ছে...";
+
+
+    const result =
+        await supabaseClient
+        .from("tournaments")
+        .insert({
+
+            title:title,
+
+            game:"Free Fire",
+
+            date:date || null,
+
+            time:time || null,
+
+            entry_fee:entryFee,
+
+            prize_pool:prizePool,
+
+            max_players:maxPlayers,
+
+            status:status
+
+        });
+
+
+    if(result.error){
+
+        console.error(
+            result.error
+        );
+
+
+        message.className=
+            "message show error";
+
+        message.innerText=
+            "❌ Save হয়নি:\n"+
+            result.error.message;
+
+        return;
+    }
+
+
+    message.className=
+        "message show success";
+
+    message.innerText=
+        "✅ Tournament তৈরি হয়েছে।";
+
+
+    document.getElementById(
+        "title"
+    ).value="";
+
+
+    document.getElementById(
+        "date"
+    ).value="";
+
+
+    document.getElementById(
+        "time"
+    ).value="";
+
+
+    document.getElementById(
+        "entryFee"
+    ).value="";
+
+
+    document.getElementById(
+        "prizePool"
+    ).value="";
+
+
+    document.getElementById(
+        "maxPlayers"
+    ).value="";
+
+
+    loadTournaments();
+}
+
+
+/* =====================================================
+   LOAD TOURNAMENTS
+===================================================== */
+
+async function loadTournaments(){
+
+    const box =
+        document.getElementById(
+            "tournamentTable"
+        );
+
+
+    box.innerHTML=
+        "Loading...";
+
+
+    const result =
+        await supabaseClient
+        .from("tournaments")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(result.error){
+
+        box.innerHTML=
+            "❌ "+
+            escapeHtml(
+                result.error.message
+            );
+
+        return;
+    }
+
+
+    const data =
+        result.data;
+
+
+    if(!data || data.length===0){
+
+        box.innerHTML=
+            "কোনো Tournament নেই।";
+
+        return;
+    }
+
+
+    let html=`
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Date</th>
+<th>Time</th>
+<th>Entry</th>
+<th>Prize</th>
+<th>Players</th>
+<th>Status</th>
+</tr>
+`;
+
+
+    data.forEach(function(t){
+
+        html+=`
+
+<tr>
+
+<td>
+${escapeHtml(
+    t.title || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    t.date || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    t.time || "-"
+)}
+</td>
+
+<td>
+৳${escapeHtml(
+    String(
+        t.entry_fee ?? 0
+    )
+)}
+</td>
+
+<td>
+৳${escapeHtml(
+    String(
+        t.prize_pool ?? 0
+    )
+)}
+</td>
+
+<td>
+${escapeHtml(
+    String(
+        t.max_players ?? 0
+    )
+)}
+</td>
+
+<td>
+<span class="status">
+${escapeHtml(
+    t.status || "-"
+)}
+</span>
+</td>
+
+</tr>
+
+`;
+
+    });
+
+
+    html+=`
+</table>
+`;
+
+
+    box.innerHTML=
+        html;
+}
+
+
+/* =====================================================
+   LOAD PLAYERS
+===================================================== */
+
+async function loadPlayers(){
+
+    const box =
+        document.getElementById(
+            "playerTable"
+        );
+
+
+    box.innerHTML=
+        "Loading...";
+
+
+    const result =
+        await supabaseClient
+        .from("tournament_players")
+        .select(`
+            *,
+            tournaments(title)
+        `)
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(result.error){
+
+        box.innerHTML=
+            "❌ "+
+            escapeHtml(
+                result.error.message
+            );
+
+        return;
+    }
+
+
+    const data =
+        result.data;
+
+
+    if(!data || data.length===0){
+
+        box.innerHTML=
+            "এখনো কোনো Player Join করেনি।";
+
+        return;
+    }
+
+
+    let html=`
+
+<table>
+
+<tr>
+<th>Tournament</th>
+<th>Player</th>
+<th>UID</th>
+<th>WhatsApp</th>
+<th>Payment</th>
+<th>Transaction ID</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+`;
+
+
+    data.forEach(function(player){
+
+        html+=`
+
+<tr>
+
+<td>
+${escapeHtml(
+    player.tournaments?.title || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    player.player_name || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    player.free_fire_uid || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    player.whatsapp || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    player.payment_method || "-"
+)}
+</td>
+
+<td>
+${escapeHtml(
+    player.transaction_id || "-"
+)}
+</td>
+
+<td>
+<span class="status">
+${escapeHtml(
+    player.payment_status ||
+    "Pending"
+)}
+</span>
+</td>
+
+<td>
+
+<button
+type="button"
+class="green action"
+onclick="changePayment(
+${player.id},
+'Approved'
+)">
+
+Approve
+
+</button>
+
+<button
+type="button"
+class="red action"
+onclick="changePayment(
+${player.id},
+'Rejected'
+)">
+
+Reject
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+
+    html+=`
+</table>
+`;
+
+
+    box.innerHTML=
+        html;
+}
+
+
+/* =====================================================
+   PAYMENT STATUS
+===================================================== */
+
+async function changePayment(
+    id,
+    status
+){
+
+    const result =
+        await supabaseClient
+        .from("tournament_players")
+        .update({
+
+            payment_status:
+                status
+
+        })
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(result.error){
+
+        alert(
+            "Update হয়নি:\n"+
+            result.error.message
+        );
+
+        return;
+    }
+
+
+    loadPlayers();
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+}
+
+
+/* =====================================================
+   CHECK SESSION
+===================================================== */
+
+async function checkSession(){
+
+    if(!initializeSupabase()){
+
+        return;
+    }
+
+
+    try{
+
+        const result =
+            await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(!result.data.session){
+
+            return;
+        }
+
+
+        const user =
+            result.data
+            .session
+            .user;
+
+
+        const adminResult =
+            await supabaseClient
+            .from("admins")
+            .select("user_id")
+            .eq(
+                "user_id",
+                user.id
+            )
+            .maybeSingle();
+
+
+        if(
+            adminResult.data &&
+            !adminResult.error
+        ){
+
+            document
+            .getElementById(
+                "loginPage"
+            )
+            .classList
+            .add("hidden");
+
+
+            document
+            .getElementById(
+                "adminPage"
+            )
+            .classList
+            .remove("hidden");
+
+
+            document
+            .getElementById(
+                "logoutBtn"
+            )
+            .classList
+            .remove("hidden");
+
+
+            loadTournaments();
+
+            loadPlayers();
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "SESSION ERROR:",
+            error
+        );
+    }
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        initializeSupabase();
+
+        checkSession();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
