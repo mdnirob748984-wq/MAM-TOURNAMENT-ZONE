@@ -10,492 +10,385 @@
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-    font-family:Arial,sans-serif;
-    background:#070b16;
-    color:#fff;
-}
-
-header{
-    background:#0d1428;
-    border-bottom:1px solid #29365b;
-    padding:15px;
-}
-
-.header{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.logo{
-    color:#00e5ff;
-    font-size:18px;
-    font-weight:bold;
+  background:#0f172a;
+  color:white;
+  padding:15px;
 }
 
 .container{
-    max-width:1100px;
-    margin:auto;
-    padding:25px 15px;
+  max-width:1100px;
+  margin:auto;
 }
 
-.login-box{
-    width:calc(100% - 30px);
-    max-width:420px;
-    margin:70px auto;
-    background:#111a33;
-    border:1px solid #34436f;
-    border-radius:16px;
-    padding:25px;
+h1{
+  text-align:center;
+  margin:15px 0 5px;
 }
 
-.login-box h1{
-    text-align:center;
-    color:#00e5ff;
-    margin-bottom:10px;
-}
-
-.login-info{
-    text-align:center;
-    color:#9da9c9;
-    margin-bottom:25px;
-    font-size:14px;
-}
-
-label{
-    display:block;
-    color:#dbe4ff;
-    margin-bottom:7px;
-    font-weight:bold;
-}
-
-input,
-select{
-    width:100%;
-    padding:14px;
-    margin-bottom:15px;
-    background:#080d1b;
-    color:#fff;
-    border:1px solid #394873;
-    border-radius:9px;
-    font-size:15px;
-    outline:none;
-}
-
-input:focus,
-select:focus{
-    border-color:#00e5ff;
-}
-
-button{
-    border:0;
-    border-radius:9px;
-    padding:12px 16px;
-    cursor:pointer;
-    font-weight:bold;
-    font-size:14px;
-}
-
-.login-button{
-    width:100%;
-    background:#00e5ff;
-    color:#001014;
-    font-size:16px;
-}
-
-.login-button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.logout{
-    background:#ff4757;
-    color:#fff;
-}
-
-.green{
-    background:#00e676;
-    color:#001b0b;
-}
-
-.red{
-    background:#ff4757;
-    color:#fff;
-}
-
-.gray{
-    background:#303a5f;
-    color:#fff;
-}
-
-.message{
-    margin-top:15px;
-    padding:10px;
-    border-radius:8px;
-    text-align:center;
-    line-height:1.6;
-    white-space:pre-line;
-    display:none;
-}
-
-.message.show{
-    display:block;
-}
-
-.message.error{
-    background:#35151d;
-    color:#ff9ba8;
-    border:1px solid #71303c;
-}
-
-.message.success{
-    background:#102d21;
-    color:#5dffa8;
-    border:1px solid #236b49;
-}
-
-.message.loading{
-    background:#10253a;
-    color:#6ee7ff;
-    border:1px solid #24536a;
-}
-
-.hidden{
-    display:none !important;
+.subtitle{
+  text-align:center;
+  color:#94a3b8;
+  margin-bottom:20px;
 }
 
 .card{
-    background:#111a33;
-    border:1px solid #293860;
-    border-radius:14px;
-    padding:20px;
-    margin-bottom:20px;
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:18px;
 }
 
-.card h2{
-    color:#00e5ff;
-    margin-bottom:20px;
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px;
+  margin:7px 0 12px;
+  border:1px solid #475569;
+  border-radius:8px;
+  background:#0f172a;
+  color:white;
+  font-size:15px;
 }
 
-.table-wrap{
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:4px;
+}
+
+.login-btn{
+  background:#22c55e;
+  color:white;
+  width:100%;
+}
+
+.add-btn{
+  background:#2563eb;
+  color:white;
+}
+
+.edit-btn{
+  background:#f59e0b;
+  color:black;
+}
+
+.delete-btn{
+  background:#ef4444;
+  color:white;
+}
+
+.players-btn{
+  background:#8b5cf6;
+  color:white;
+}
+
+.logout-btn{
+  background:#64748b;
+  color:white;
+  float:right;
+}
+
+.hidden{
+  display:none;
+}
+
+.message{
+  margin-top:10px;
+  padding:10px;
+  background:#334155;
+  border-radius:8px;
+}
+
+.success{
+  background:#166534;
+}
+
+.error{
+  background:#991b1b;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:#1e293b;
+  padding:20px;
+  text-align:center;
+  border-radius:12px;
+}
+
+.stat h2{
+  color:#38bdf8;
+  font-size:28px;
+  word-break:break-word;
+}
+
+.stat p{
+  color:#94a3b8;
+  margin-top:5px;
+}
+
+.tournament{
+  background:#0f172a;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:12px;
+  border:1px solid #334155;
+}
+
+.tournament h3{
+  color:#38bdf8;
+  margin-bottom:8px;
+}
+
+.info{
+  color:#cbd5e1;
+  line-height:1.7;
+}
+
+.players{
+  background:#111827;
+  margin-top:10px;
+  padding:12px;
+  border-radius:8px;
+}
+
+.player{
+  padding:10px;
+  border-bottom:1px solid #334155;
+  line-height:1.6;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+}
+
+.empty{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+}
+
+@media(max-width:700px){
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  button{
     width:100%;
-    overflow-x:auto;
-    margin-top:15px;
-}
+    margin:5px 0;
+  }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:850px;
-}
-
-th,
-td{
-    padding:11px;
-    border-bottom:1px solid #293860;
-    text-align:left;
-    font-size:13px;
-}
-
-th{
-    color:#00e5ff;
-}
-
-.status{
-    display:inline-block;
-    padding:5px 8px;
-    border-radius:6px;
-    background:#273456;
-}
-
-.action{
-    margin:2px;
-}
-
-@media(max-width:600px){
-
-    .logo{
-        font-size:14px;
-    }
-
-    .login-box{
-        margin-top:40px;
-    }
+  .logout-btn{
+    width:auto;
+  }
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- ================= HEADER ================= -->
-
-<header>
-
-<div class="header">
-
-<div class="logo">
-🎮 MAM TOURNAMENT ZONE ADMIN
-</div>
-
-<button
-id="logoutBtn"
-class="logout hidden"
-type="button"
-onclick="logout()">
-
-Logout
-
-</button>
-
-</div>
-
-</header>
-
-
-<!-- ================= LOGIN PAGE ================= -->
-
-<div id="loginPage">
-
-<div class="login-box">
-
-<h1>
-🔐 Admin Login
-</h1>
-
-<div class="login-info">
-MAM TOURNAMENT ZONE Admin Panel
-</div>
-
-
-<label>
-Email
-</label>
-
-<input
-id="email"
-type="email"
-value="mdnirob748984@gmail.com"
-placeholder="Admin Email"
-autocomplete="email"
->
-
-
-<label>
-Password
-</label>
-
-<input
-id="password"
-type="password"
-placeholder="আপনার Supabase Password"
-autocomplete="current-password"
->
-
-
-<button
-id="loginButton"
-type="button"
-class="login-button"
-onclick="adminLogin()">
-
-🔐 LOGIN
-
-</button>
-
-
-<div
-id="loginMessage"
-class="message">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================= ADMIN PAGE ================= -->
-
-<div
-id="adminPage"
-class="hidden">
-
 <div class="container">
 
-<h1 style="color:#00e5ff;margin-bottom:25px;">
-📊 Admin Dashboard
-</h1>
+<h1>🎮 MAM TOURNAMENT ZONE</h1>
+
+<div class="subtitle">
+ADMIN PANEL
+</div>
 
 
-<!-- ADD TOURNAMENT -->
+<!-- LOGIN -->
+
+<div id="loginBox" class="card">
+
+<h2>🔐 Admin Login</h2>
+
+<br>
+
+<input
+  id="loginEmail"
+  type="email"
+  placeholder="Admin Email"
+>
+
+<input
+  id="loginPassword"
+  type="password"
+  placeholder="Password"
+>
+
+<button
+  class="login-btn"
+  onclick="loginAdmin()"
+>
+🔐 Login
+</button>
+
+<div
+  id="loginMessage"
+  class="message hidden"
+></div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div id="adminPanel" class="hidden">
+
+<button
+  class="logout-btn"
+  onclick="logoutAdmin()"
+>
+Logout
+</button>
+
+<div style="clear:both"></div>
+
+<br>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="totalTournaments">0</h2>
+<p>Total Tournaments</p>
+</div>
+
+<div class="stat">
+<h2 id="totalPlayers">0</h2>
+<p>Total Joined Players</p>
+</div>
+
+<div class="stat">
+<h2 id="adminEmail" style="font-size:16px">-</h2>
+<p>Admin</p>
+</div>
+
+</div>
+
+
+<!-- CREATE TOURNAMENT -->
 
 <div class="card">
 
-<h2>
-➕ Add Free Fire Tournament
+<h2 id="formTitle">
+➕ Create Tournament
 </h2>
 
-
-<label>
-Tournament Name
-</label>
+<br>
 
 <input
-id="title"
-type="text"
-placeholder="MAM Friday Tournament"
+  type="hidden"
+  id="editId"
+>
+
+<label>Tournament Name</label>
+
+<input
+  id="title"
+  type="text"
+  placeholder="MAM Free Fire Tournament"
 >
 
 
-<label>
-Date
-</label>
+<label>Mode</label>
 
-<input
-id="date"
-type="date"
->
+<select id="mode">
 
-
-<label>
-Time
-</label>
-
-<input
-id="time"
-type="time"
->
-
-
-<label>
-Entry Fee
-</label>
-
-<input
-id="entryFee"
-type="number"
-placeholder="50"
->
-
-
-<label>
-Prize Pool
-</label>
-
-<input
-id="prizePool"
-type="number"
-placeholder="1000"
->
-
-
-<label>
-Maximum Players
-</label>
-
-<input
-id="maxPlayers"
-type="number"
-placeholder="48"
->
-
-
-<label>
-Status
-</label>
-
-<select id="status">
-
-<option value="Open">
-Open
-</option>
-
-<option value="Closed">
-Closed
-</option>
+<option value="Solo">Solo</option>
+<option value="Duo">Duo</option>
+<option value="Squad">Squad</option>
 
 </select>
 
 
+<label>Date</label>
+
+<input
+  id="date"
+  type="date"
+>
+
+
+<label>Time</label>
+
+<input
+  id="time"
+  type="time"
+>
+
+
+<label>Description</label>
+
+<textarea
+  id="description"
+  placeholder="Tournament সম্পর্কে বিস্তারিত লিখুন..."
+></textarea>
+
+
 <button
-type="button"
-class="green"
-onclick="addTournament()">
+  class="add-btn"
+  onclick="saveTournament()"
+>
+💾 Save Tournament
+</button>
 
-➕ ADD TOURNAMENT
 
+<button
+  id="cancelEditBtn"
+  class="hidden"
+  onclick="clearForm()"
+>
+❌ Cancel
 </button>
 
 
 <div
-id="tournamentMessage"
-class="message">
-</div>
+  id="formMessage"
+  class="message hidden"
+></div>
 
 </div>
 
 
-<!-- TOURNAMENT LIST -->
+<!-- TOURNAMENT MANAGEMENT -->
 
 <div class="card">
 
-<h2>
-🎮 Tournament List
-</h2>
+<h2>🏆 Tournament Management</h2>
 
-<button
-type="button"
-class="gray"
-onclick="loadTournaments()">
-
-🔄 Refresh
-
-</button>
-
+<br>
 
 <div
-id="tournamentTable"
-class="table-wrap">
-
+  id="tournamentList"
+  class="loading"
+>
 Loading...
-
-</div>
-
-</div>
-
-
-<!-- PLAYER LIST -->
-
-<div class="card">
-
-<h2>
-👥 Players & Payments
-</h2>
-
-<button
-type="button"
-class="gray"
-onclick="loadPlayers()">
-
-🔄 Refresh Players
-
-</button>
-
-
-<div
-id="playerTable"
-class="table-wrap">
-
-Loading...
-
 </div>
 
 </div>
@@ -507,1041 +400,940 @@ Loading...
 
 <script>
 
-/* =====================================================
+/* =========================================
    SUPABASE CONFIG
-===================================================== */
+   ========================================= */
 
 const SUPABASE_URL =
 "https://gxnijfjzigbxvibgtvwj.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_kegdIDq_ppqQF302sJXVWA_v_fzHc7E";
 
 
-/* =====================================================
-   CREATE SUPABASE CLIENT
-===================================================== */
-
-let supabaseClient = null;
-
-
-function initializeSupabase(){
-
-    try{
-
-        if(
-            !window.supabase ||
-            typeof window.supabase.createClient !== "function"
-        ){
-
-            showLoginMessage(
-                "Supabase library load হয়নি। Internet connection চেক করুন।",
-                "error"
-            );
-
-            return false;
-        }
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
 
-        supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
+/* =========================================
+   MESSAGE
+   ========================================= */
 
+function message(id,text,type="normal"){
 
-        return true;
+  const box =
+  document.getElementById(id);
 
+  box.innerText = text;
 
-    }catch(error){
+  box.classList.remove(
+    "hidden",
+    "success",
+    "error"
+  );
 
-        console.error(error);
+  if(type === "success"){
+    box.classList.add("success");
+  }
 
-        showLoginMessage(
-            "Supabase শুরু করা যায়নি:\n"+error.message,
-            "error"
-        );
-
-        return false;
-    }
+  if(type === "error"){
+    box.classList.add("error");
+  }
 }
 
 
-/* =====================================================
-   LOGIN MESSAGE
-===================================================== */
+/* =========================================
+   LOGIN
+   ========================================= */
 
-function showLoginMessage(text,type){
+async function loginAdmin(){
 
-    const box =
-        document.getElementById("loginMessage");
+  const email =
+  document
+  .getElementById("loginEmail")
+  .value
+  .trim();
 
-
-    box.className =
-        "message show "+type;
-
-
-    box.innerText =
-        text;
-}
-
-
-/* =====================================================
-   ADMIN LOGIN
-===================================================== */
-
-async function adminLogin(){
-
-    const button =
-        document.getElementById("loginButton");
-
-    const email =
-        document.getElementById("email")
-        .value
-        .trim();
-
-    const password =
-        document.getElementById("password")
-        .value;
+  const password =
+  document
+  .getElementById("loginPassword")
+  .value;
 
 
-    /* BUTTON TEST */
+  if(!email || !password){
 
-    showLoginMessage(
-        "⏳ Login হচ্ছে...",
-        "loading"
+    message(
+      "loginMessage",
+      "Email এবং Password দিন।",
+      "error"
     );
 
+    return;
+  }
 
-    if(!supabaseClient){
 
-        const ready =
-            initializeSupabase();
+  message(
+    "loginMessage",
+    "Login হচ্ছে..."
+  );
 
 
-        if(!ready){
+  const {
+    error
+  } =
+  await supabaseClient.auth.signInWithPassword({
 
-            return;
-        }
-    }
+    email:email,
+    password:password
 
+  });
 
-    if(!email){
 
-        showLoginMessage(
-            "❌ Email লিখুন।",
-            "error"
-        );
+  if(error){
 
-        return;
-    }
+    message(
+      "loginMessage",
+      "Login হয়নি: " + error.message,
+      "error"
+    );
 
+    return;
+  }
 
-    if(!password){
 
-        showLoginMessage(
-            "❌ Password লিখুন।",
-            "error"
-        );
-
-        return;
-    }
-
-
-    button.disabled=true;
-
-    button.innerText=
-        "LOGIN হচ্ছে...";
-
-
-    try{
-
-        /* =====================================
-           SUPABASE AUTH LOGIN
-        ===================================== */
-
-        const result =
-            await supabaseClient
-            .auth
-            .signInWithPassword({
-
-                email:email,
-
-                password:password
-
-            });
-
-
-        const data =
-            result.data;
-
-        const error =
-            result.error;
-
-
-        console.log(
-            "LOGIN RESULT:",
-            result
-        );
-
-
-        /* LOGIN ERROR */
-
-        if(error){
-
-            console.error(
-                "SUPABASE LOGIN ERROR:",
-                error
-            );
-
-
-            showLoginMessage(
-                "❌ Login হয়নি:\n"+
-                error.message,
-                "error"
-            );
-
-
-            button.disabled=false;
-
-            button.innerText=
-                "🔐 LOGIN";
-
-            return;
-        }
-
-
-        if(
-            !data ||
-            !data.user
-        ){
-
-            showLoginMessage(
-                "❌ User পাওয়া যায়নি।",
-                "error"
-            );
-
-
-            button.disabled=false;
-
-            button.innerText=
-                "🔐 LOGIN";
-
-            return;
-        }
-
-
-        /* =====================================
-           CHECK ADMIN TABLE
-        ===================================== */
-
-        showLoginMessage(
-            "⏳ Admin account যাচাই হচ্ছে...",
-            "loading"
-        );
-
-
-        const adminResult =
-            await supabaseClient
-            .from("admins")
-            .select("user_id")
-            .eq(
-                "user_id",
-                data.user.id
-            )
-            .maybeSingle();
-
-
-        console.log(
-            "ADMIN RESULT:",
-            adminResult
-        );
-
-
-        if(adminResult.error){
-
-            console.error(
-                "ADMIN ERROR:",
-                adminResult.error
-            );
-
-
-            await supabaseClient
-                .auth
-                .signOut();
-
-
-            showLoginMessage(
-                "❌ Admin যাচাই করা যায়নি:\n"+
-                adminResult.error.message,
-                "error"
-            );
-
-
-            button.disabled=false;
-
-            button.innerText=
-                "🔐 LOGIN";
-
-            return;
-        }
-
-
-        if(!adminResult.data){
-
-            await supabaseClient
-                .auth
-                .signOut();
-
-
-            showLoginMessage(
-                "❌ এই Email Admin হিসেবে যোগ করা নেই।",
-                "error"
-            );
-
-
-            button.disabled=false;
-
-            button.innerText=
-                "🔐 LOGIN";
-
-            return;
-        }
-
-
-        /* =====================================
-           LOGIN SUCCESS
-        ===================================== */
-
-        showLoginMessage(
-            "✅ Login সফল! Admin Panel খুলছে...",
-            "success"
-        );
-
-
-        setTimeout(
-            function(){
-
-                document
-                .getElementById(
-                    "loginPage"
-                )
-                .classList
-                .add("hidden");
-
-
-                document
-                .getElementById(
-                    "adminPage"
-                )
-                .classList
-                .remove("hidden");
-
-
-                document
-                .getElementById(
-                    "logoutBtn"
-                )
-                .classList
-                .remove("hidden");
-
-
-                button.disabled=false;
-
-                button.innerText=
-                    "🔐 LOGIN";
-
-
-                loadTournaments();
-
-                loadPlayers();
-
-            },
-            700
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "LOGIN JAVASCRIPT ERROR:",
-            error
-        );
-
-
-        showLoginMessage(
-            "❌ Error হয়েছে:\n"+
-            error.message,
-            "error"
-        );
-
-
-        button.disabled=false;
-
-        button.innerText=
-            "🔐 LOGIN";
-    }
+  await checkAdmin();
 
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* =========================================
+   CHECK ADMIN
+   ========================================= */
 
-async function logout(){
+async function checkAdmin(){
 
-    if(!supabaseClient){
-
-        location.reload();
-
-        return;
+  const {
+    data:{
+      user
     }
+  } =
+  await supabaseClient
+  .auth
+  .getUser();
 
+
+  if(!user){
+
+    return;
+  }
+
+
+  const {
+    data:admin,
+    error
+  } =
+  await supabaseClient
+  .from("admins")
+  .select("id,email,user_id")
+  .eq("user_id",user.id)
+  .maybeSingle();
+
+
+  if(error){
+
+    message(
+      "loginMessage",
+      "Admin check error: " +
+      error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!admin){
 
     await supabaseClient
-        .auth
-        .signOut();
+    .auth
+    .signOut();
+
+    message(
+      "loginMessage",
+      "এই account Admin হিসেবে যোগ করা নেই।",
+      "error"
+    );
+
+    return;
+  }
 
 
-    location.reload();
+  document
+  .getElementById("loginBox")
+  .classList
+  .add("hidden");
+
+
+  document
+  .getElementById("adminPanel")
+  .classList
+  .remove("hidden");
+
+
+  document
+  .getElementById("adminEmail")
+  .innerText =
+  admin.email || user.email;
+
+
+  await loadTournaments();
+
 }
 
 
-/* =====================================================
-   ADD TOURNAMENT
-===================================================== */
-
-async function addTournament(){
-
-    const message =
-        document.getElementById(
-            "tournamentMessage"
-        );
-
-
-    const title =
-        document.getElementById(
-            "title"
-        ).value.trim();
-
-
-    const date =
-        document.getElementById(
-            "date"
-        ).value;
-
-
-    const time =
-        document.getElementById(
-            "time"
-        ).value;
-
-
-    const entryFee =
-        Number(
-            document.getElementById(
-                "entryFee"
-            ).value || 0
-        );
-
-
-    const prizePool =
-        Number(
-            document.getElementById(
-                "prizePool"
-            ).value || 0
-        );
-
-
-    const maxPlayers =
-        Number(
-            document.getElementById(
-                "maxPlayers"
-            ).value || 0
-        );
-
-
-    const status =
-        document.getElementById(
-            "status"
-        ).value;
-
-
-    if(!title){
-
-        message.className=
-            "message show error";
-
-        message.innerText=
-            "Tournament Name দিন।";
-
-        return;
-    }
-
-
-    message.className=
-        "message show loading";
-
-    message.innerText=
-        "Tournament Save হচ্ছে...";
-
-
-    const result =
-        await supabaseClient
-        .from("tournaments")
-        .insert({
-
-            title:title,
-
-            game:"Free Fire",
-
-            date:date || null,
-
-            time:time || null,
-
-            entry_fee:entryFee,
-
-            prize_pool:prizePool,
-
-            max_players:maxPlayers,
-
-            status:status
-
-        });
-
-
-    if(result.error){
-
-        console.error(
-            result.error
-        );
-
-
-        message.className=
-            "message show error";
-
-        message.innerText=
-            "❌ Save হয়নি:\n"+
-            result.error.message;
-
-        return;
-    }
-
-
-    message.className=
-        "message show success";
-
-    message.innerText=
-        "✅ Tournament তৈরি হয়েছে।";
-
-
-    document.getElementById(
-        "title"
-    ).value="";
-
-
-    document.getElementById(
-        "date"
-    ).value="";
-
-
-    document.getElementById(
-        "time"
-    ).value="";
-
-
-    document.getElementById(
-        "entryFee"
-    ).value="";
-
-
-    document.getElementById(
-        "prizePool"
-    ).value="";
-
-
-    document.getElementById(
-        "maxPlayers"
-    ).value="";
-
-
-    loadTournaments();
-}
-
-
-/* =====================================================
+/* =========================================
    LOAD TOURNAMENTS
-===================================================== */
+   ========================================= */
 
 async function loadTournaments(){
 
-    const box =
-        document.getElementById(
-            "tournamentTable"
-        );
+  const list =
+  document.getElementById(
+    "tournamentList"
+  );
 
 
-    box.innerHTML=
-        "Loading...";
+  list.innerHTML =
+  '<div class="loading">Loading...</div>';
 
 
-    const result =
-        await supabaseClient
-        .from("tournaments")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(result.error){
-
-        box.innerHTML=
-            "❌ "+
-            escapeHtml(
-                result.error.message
-            );
-
-        return;
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+  .from("tournaments")
+  .select("*")
+  .order(
+    "created_at",
+    {
+      ascending:false
     }
+  );
 
 
-    const data =
-        result.data;
+  if(error){
+
+    list.innerHTML =
+    '<div class="message error">' +
+    "Tournament load হয়নি: " +
+    escapeHtml(error.message) +
+    "</div>";
+
+    return;
+  }
 
 
-    if(!data || data.length===0){
-
-        box.innerHTML=
-            "কোনো Tournament নেই।";
-
-        return;
-    }
+  const tournaments =
+  data || [];
 
 
-    let html=`
-
-<table>
-
-<tr>
-<th>Name</th>
-<th>Date</th>
-<th>Time</th>
-<th>Entry</th>
-<th>Prize</th>
-<th>Players</th>
-<th>Status</th>
-</tr>
-`;
+  document
+  .getElementById("totalTournaments")
+  .innerText =
+  tournaments.length;
 
 
-    data.forEach(function(t){
+  if(tournaments.length === 0){
 
-        html+=`
+    list.innerHTML =
+    '<div class="empty">' +
+    "এখনো কোনো Tournament তৈরি হয়নি।" +
+    "</div>";
 
-<tr>
+    document
+    .getElementById("totalPlayers")
+    .innerText = "0";
 
-<td>
-${escapeHtml(
-    t.title || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    t.date || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    t.time || "-"
-)}
-</td>
-
-<td>
-৳${escapeHtml(
-    String(
-        t.entry_fee ?? 0
-    )
-)}
-</td>
-
-<td>
-৳${escapeHtml(
-    String(
-        t.prize_pool ?? 0
-    )
-)}
-</td>
-
-<td>
-${escapeHtml(
-    String(
-        t.max_players ?? 0
-    )
-)}
-</td>
-
-<td>
-<span class="status">
-${escapeHtml(
-    t.status || "-"
-)}
-</span>
-</td>
-
-</tr>
-
-`;
-
-    });
+    return;
+  }
 
 
-    html+=`
-</table>
-`;
+  list.innerHTML = "";
 
 
-    box.innerHTML=
-        html;
+  let totalPlayers = 0;
+
+
+  for(
+    const tournament
+    of tournaments
+  ){
+
+    const count =
+    await getPlayerCount(
+      tournament.id
+    );
+
+
+    totalPlayers += count;
+
+
+    const div =
+    document.createElement("div");
+
+
+    div.className =
+    "tournament";
+
+
+    div.innerHTML = `
+
+      <h3>
+      🎮 ${escapeHtml(
+        tournament.title || "-"
+      )}
+      </h3>
+
+      <div class="info">
+
+      🎯 Game:
+      ${escapeHtml(
+        tournament.game || "Free Fire"
+      )}
+
+      <br>
+
+      👥 Mode:
+      ${escapeHtml(
+        tournament.mode || "-"
+      )}
+
+      <br>
+
+      📅 Date:
+      ${escapeHtml(
+        tournament.date || "-"
+      )}
+
+      <br>
+
+      ⏰ Time:
+      ${escapeHtml(
+        tournament.time || "-"
+      )}
+
+      <br>
+
+      👤 Joined:
+      ${count} Players
+
+      <br>
+
+      📝 Description:
+      ${escapeHtml(
+        tournament.description || "-"
+      )}
+
+      </div>
+
+      <br>
+
+      <button
+        class="edit-btn"
+        onclick="editTournament('${tournament.id}')"
+      >
+      ✏️ Edit
+      </button>
+
+      <button
+        class="delete-btn"
+        onclick="deleteTournament('${tournament.id}')"
+      >
+      🗑️ Delete
+      </button>
+
+      <button
+        class="players-btn"
+        onclick="showPlayers('${tournament.id}')"
+      >
+      👥 Players
+      </button>
+
+      <div
+        id="players-${tournament.id}"
+        class="players hidden"
+      ></div>
+
+    `;
+
+
+    list.appendChild(div);
+
+  }
+
+
+  document
+  .getElementById("totalPlayers")
+  .innerText =
+  totalPlayers;
+
 }
 
 
-/* =====================================================
-   LOAD PLAYERS
-===================================================== */
+/* =========================================
+   PLAYER COUNT
+   ========================================= */
 
-async function loadPlayers(){
+async function getPlayerCount(id){
 
-    const box =
-        document.getElementById(
-            "playerTable"
-        );
-
-
-    box.innerHTML=
-        "Loading...";
-
-
-    const result =
-        await supabaseClient
-        .from("tournament_players")
-        .select(`
-            *,
-            tournaments(title)
-        `)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(result.error){
-
-        box.innerHTML=
-            "❌ "+
-            escapeHtml(
-                result.error.message
-            );
-
-        return;
+  const {
+    count,
+    error
+  } =
+  await supabaseClient
+  .from("tournament_players")
+  .select(
+    "id",
+    {
+      count:"exact",
+      head:true
     }
+  )
+  .eq(
+    "tournament_id",
+    id
+  );
 
 
-    const data =
-        result.data;
+  if(error){
+
+    console.log(error);
+
+    return 0;
+  }
 
 
-    if(!data || data.length===0){
+  return count || 0;
 
-        box.innerHTML=
-            "এখনো কোনো Player Join করেনি।";
-
-        return;
-    }
-
-
-    let html=`
-
-<table>
-
-<tr>
-<th>Tournament</th>
-<th>Player</th>
-<th>UID</th>
-<th>WhatsApp</th>
-<th>Payment</th>
-<th>Transaction ID</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-`;
-
-
-    data.forEach(function(player){
-
-        html+=`
-
-<tr>
-
-<td>
-${escapeHtml(
-    player.tournaments?.title || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    player.player_name || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    player.free_fire_uid || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    player.whatsapp || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    player.payment_method || "-"
-)}
-</td>
-
-<td>
-${escapeHtml(
-    player.transaction_id || "-"
-)}
-</td>
-
-<td>
-<span class="status">
-${escapeHtml(
-    player.payment_status ||
-    "Pending"
-)}
-</span>
-</td>
-
-<td>
-
-<button
-type="button"
-class="green action"
-onclick="changePayment(
-${player.id},
-'Approved'
-)">
-
-Approve
-
-</button>
-
-<button
-type="button"
-class="red action"
-onclick="changePayment(
-${player.id},
-'Rejected'
-)">
-
-Reject
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-    });
-
-
-    html+=`
-</table>
-`;
-
-
-    box.innerHTML=
-        html;
 }
 
 
-/* =====================================================
-   PAYMENT STATUS
-===================================================== */
+/* =========================================
+   SHOW PLAYERS
+   ========================================= */
 
-async function changePayment(
+async function showPlayers(id){
+
+  const box =
+  document.getElementById(
+    "players-" + id
+  );
+
+
+  box.classList.toggle("hidden");
+
+
+  if(
+    box.classList.contains("hidden")
+  ){
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+  '<div class="loading">Players Loading...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+  .from("tournament_players")
+  .select(`
     id,
-    status
-){
-
-    const result =
-        await supabaseClient
-        .from("tournament_players")
-        .update({
-
-            payment_status:
-                status
-
-        })
-        .eq(
-            "id",
-            id
-        );
-
-
-    if(result.error){
-
-        alert(
-            "Update হয়নি:\n"+
-            result.error.message
-        );
-
-        return;
+    player_name,
+    free_fire_uid,
+    free_fire_name,
+    whatsapp,
+    joined_at
+  `)
+  .eq(
+    "tournament_id",
+    id
+  )
+  .order(
+    "joined_at",
+    {
+      ascending:false
     }
+  );
 
 
-    loadPlayers();
+  if(error){
+
+    box.innerHTML =
+    '<div class="message error">' +
+    "Players load হয়নি: " +
+    escapeHtml(error.message) +
+    "</div>";
+
+    return;
+  }
+
+
+  if(!data || data.length === 0){
+
+    box.innerHTML =
+    '<div class="empty">' +
+    "এই Tournament-এ এখনো কেউ Join করেনি।" +
+    "</div>";
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  data.forEach(
+    (player,index)=>{
+
+      const div =
+      document.createElement("div");
+
+
+      div.className =
+      "player";
+
+
+      div.innerHTML = `
+
+      <b>
+      #${index + 1}
+      ${escapeHtml(
+        player.player_name || "-"
+      )}
+      </b>
+
+      <br>
+
+      🆔 UID:
+      ${escapeHtml(
+        player.free_fire_uid || "-"
+      )}
+
+      <br>
+
+      🎮 FF Name:
+      ${escapeHtml(
+        player.free_fire_name || "-"
+      )}
+
+      <br>
+
+      📱 WhatsApp:
+      ${escapeHtml(
+        player.whatsapp || "-"
+      )}
+
+      `;
+
+
+      box.appendChild(div);
+
+    }
+  );
+
 }
 
 
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
+/* =========================================
+   SAVE TOURNAMENT
+   ========================================= */
+
+async function saveTournament(){
+
+  const editId =
+  document
+  .getElementById("editId")
+  .value;
+
+
+  const title =
+  document
+  .getElementById("title")
+  .value
+  .trim();
+
+
+  const mode =
+  document
+  .getElementById("mode")
+  .value;
+
+
+  const date =
+  document
+  .getElementById("date")
+  .value;
+
+
+  const time =
+  document
+  .getElementById("time")
+  .value;
+
+
+  const description =
+  document
+  .getElementById("description")
+  .value
+  .trim();
+
+
+  if(!title){
+
+    message(
+      "formMessage",
+      "Tournament Name দিন।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  /* EDIT */
+
+  if(editId){
+
+    const {
+      error
+    } =
+    await supabaseClient
+    .from("tournaments")
+    .update({
+
+      title:title,
+      game:"Free Fire",
+      mode:mode,
+      date:date || null,
+      time:time || null,
+      description:description || null
+
+    })
+    .eq(
+      "id",
+      editId
+    );
+
+
+    if(error){
+
+      message(
+        "formMessage",
+        "Update হয়নি: " +
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    message(
+      "formMessage",
+      "Tournament Update হয়েছে।",
+      "success"
+    );
+
+  }
+
+
+  /* CREATE */
+
+  else{
+
+    const {
+      error
+    } =
+    await supabaseClient
+    .from("tournaments")
+    .insert({
+
+      title:title,
+      game:"Free Fire",
+      mode:mode,
+      date:date || null,
+      time:time || null,
+      description:description || null
+
+    });
+
+
+    if(error){
+
+      message(
+        "formMessage",
+        "Tournament তৈরি হয়নি: " +
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    message(
+      "formMessage",
+      "Tournament তৈরি হয়েছে।",
+      "success"
+    );
+
+  }
+
+
+  clearForm();
+
+  await loadTournaments();
+
+}
+
+
+/* =========================================
+   EDIT
+   ========================================= */
+
+async function editTournament(id){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+  .from("tournaments")
+  .select("*")
+  .eq(
+    "id",
+    id
+  )
+  .single();
+
+
+  if(error){
+
+    alert(
+      "Data পাওয়া যায়নি: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  document
+  .getElementById("editId")
+  .value =
+  data.id;
+
+
+  document
+  .getElementById("title")
+  .value =
+  data.title || "";
+
+
+  document
+  .getElementById("mode")
+  .value =
+  data.mode || "Solo";
+
+
+  document
+  .getElementById("date")
+  .value =
+  data.date || "";
+
+
+  document
+  .getElementById("time")
+  .value =
+  data.time || "";
+
+
+  document
+  .getElementById("description")
+  .value =
+  data.description || "";
+
+
+  document
+  .getElementById("formTitle")
+  .innerText =
+  "✏️ Edit Tournament";
+
+
+  document
+  .getElementById("cancelEditBtn")
+  .classList
+  .remove("hidden");
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================
+   DELETE
+   ========================================= */
+
+async function deleteTournament(id){
+
+  const ok =
+  confirm(
+    "এই Tournament delete করতে চান?"
+  );
+
+
+  if(!ok){
+
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+  .from("tournaments")
+  .delete()
+  .eq(
+    "id",
+    id
+  );
+
+
+  if(error){
+
+    alert(
+      "Delete হয়নি: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "Tournament delete হয়েছে।"
+  );
+
+
+  await loadTournaments();
+
+}
+
+
+/* =========================================
+   CLEAR FORM
+   ========================================= */
+
+function clearForm(){
+
+  document
+  .getElementById("editId")
+  .value = "";
+
+
+  document
+  .getElementById("title")
+  .value = "";
+
+
+  document
+  .getElementById("mode")
+  .value = "Solo";
+
+
+  document
+  .getElementById("date")
+  .value = "";
+
+
+  document
+  .getElementById("time")
+  .value = "";
+
+
+  document
+  .getElementById("description")
+  .value = "";
+
+
+  document
+  .getElementById("formTitle")
+  .innerText =
+  "➕ Create Tournament";
+
+
+  document
+  .getElementById("cancelEditBtn")
+  .classList
+  .add("hidden");
+
+}
+
+
+/* =========================================
+   LOGOUT
+   ========================================= */
+
+async function logoutAdmin(){
+
+  await supabaseClient
+  .auth
+  .signOut();
+
+  location.reload();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+   ========================================= */
 
 function escapeHtml(value){
 
-    const div =
-        document.createElement(
-            "div"
-        );
+  return String(
+    value ?? ""
+  )
 
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
 
-    div.textContent =
-        value ?? "";
-
-
-    return div.innerHTML;
 }
 
 
-/* =====================================================
-   CHECK SESSION
-===================================================== */
+/* =========================================
+   AUTO CHECK LOGIN
+   ========================================= */
 
-async function checkSession(){
-
-    if(!initializeSupabase()){
-
-        return;
-    }
-
-
-    try{
-
-        const result =
-            await supabaseClient
-            .auth
-            .getSession();
-
-
-        if(!result.data.session){
-
-            return;
-        }
-
-
-        const user =
-            result.data
-            .session
-            .user;
-
-
-        const adminResult =
-            await supabaseClient
-            .from("admins")
-            .select("user_id")
-            .eq(
-                "user_id",
-                user.id
-            )
-            .maybeSingle();
-
-
-        if(
-            adminResult.data &&
-            !adminResult.error
-        ){
-
-            document
-            .getElementById(
-                "loginPage"
-            )
-            .classList
-            .add("hidden");
-
-
-            document
-            .getElementById(
-                "adminPage"
-            )
-            .classList
-            .remove("hidden");
-
-
-            document
-            .getElementById(
-                "logoutBtn"
-            )
-            .classList
-            .remove("hidden");
-
-
-            loadTournaments();
-
-            loadPlayers();
-        }
-
-
-    }catch(error){
-
-        console.error(
-            "SESSION ERROR:",
-            error
-        );
-    }
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        initializeSupabase();
-
-        checkSession();
-
-    }
-);
+checkAdmin();
 
 </script>
 
