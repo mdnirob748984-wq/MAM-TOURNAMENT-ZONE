@@ -18,7 +18,7 @@
 
 body{
   background:#0f172a;
-  color:white;
+  color:#fff;
   padding:15px;
 }
 
@@ -54,7 +54,7 @@ textarea{
   border:1px solid #475569;
   border-radius:8px;
   background:#0f172a;
-  color:white;
+  color:#fff;
   font-size:15px;
 }
 
@@ -74,33 +74,33 @@ button{
 
 .login-btn{
   background:#22c55e;
-  color:white;
+  color:#fff;
   width:100%;
 }
 
 .add-btn{
   background:#2563eb;
-  color:white;
+  color:#fff;
 }
 
 .edit-btn{
   background:#f59e0b;
-  color:black;
+  color:#000;
 }
 
 .delete-btn{
   background:#ef4444;
-  color:white;
+  color:#fff;
 }
 
 .players-btn{
   background:#8b5cf6;
-  color:white;
+  color:#fff;
 }
 
 .logout-btn{
   background:#64748b;
-  color:white;
+  color:#fff;
   float:right;
 }
 
@@ -230,27 +230,27 @@ ADMIN PANEL
 <br>
 
 <input
-  id="loginEmail"
-  type="email"
-  placeholder="Admin Email"
+id="loginEmail"
+type="email"
+placeholder="Admin Email"
 >
 
 <input
-  id="loginPassword"
-  type="password"
-  placeholder="Password"
+id="loginPassword"
+type="password"
+placeholder="Password"
 >
 
 <button
-  class="login-btn"
-  onclick="loginAdmin()"
+class="login-btn"
+onclick="loginAdmin()"
 >
 🔐 Login
 </button>
 
 <div
-  id="loginMessage"
-  class="message hidden"
+id="loginMessage"
+class="message hidden"
 ></div>
 
 </div>
@@ -261,8 +261,8 @@ ADMIN PANEL
 <div id="adminPanel" class="hidden">
 
 <button
-  class="logout-btn"
-  onclick="logoutAdmin()"
+class="logout-btn"
+onclick="logoutAdmin()"
 >
 Logout
 </button>
@@ -282,9 +282,7 @@ Logout
 0
 </h2>
 
-<p>
-Total Tournaments
-</p>
+<p>Total Tournaments</p>
 
 </div>
 
@@ -295,9 +293,7 @@ Total Tournaments
 0
 </h2>
 
-<p>
-Total Joined Players
-</p>
+<p>Total Joined Players</p>
 
 </div>
 
@@ -305,22 +301,20 @@ Total Joined Players
 <div class="stat">
 
 <h2
-  id="adminEmail"
-  style="font-size:16px"
+id="adminEmail"
+style="font-size:16px"
 >
 -
 </h2>
 
-<p>
-Admin
-</p>
+<p>Admin</p>
 
 </div>
 
 </div>
 
 
-<!-- CREATE / EDIT -->
+<!-- CREATE TOURNAMENT -->
 
 <div class="card">
 
@@ -331,93 +325,76 @@ Admin
 <br>
 
 <input
-  type="hidden"
-  id="editId"
+type="hidden"
+id="editId"
 >
 
-
-<label>
-Tournament Name
-</label>
+<label>Tournament Name</label>
 
 <input
-  id="title"
-  type="text"
-  placeholder="MAM Free Fire Tournament"
+id="title"
+type="text"
+placeholder="MAM Free Fire Tournament"
 >
 
 
-<label>
-Mode
-</label>
+<label>Mode</label>
 
 <select id="mode">
 
-<option value="Solo">
-Solo
-</option>
+<option value="Solo">Solo</option>
 
-<option value="Duo">
-Duo
-</option>
+<option value="Duo">Duo</option>
 
-<option value="Squad">
-Squad
-</option>
+<option value="Squad">Squad</option>
 
 </select>
 
 
-<label>
-Date
-</label>
+<label>Date</label>
 
 <input
-  id="date"
-  type="date"
+id="date"
+type="date"
 >
 
 
-<label>
-Time
-</label>
+<label>Time</label>
 
 <input
-  id="time"
-  type="time"
+id="time"
+type="time"
 >
 
 
-<label>
-Description
-</label>
+<label>Description</label>
 
 <textarea
-  id="description"
-  placeholder="Tournament সম্পর্কে বিস্তারিত লিখুন..."
+id="description"
+placeholder="Tournament সম্পর্কে বিস্তারিত লিখুন..."
 ></textarea>
 
 
 <button
-  class="add-btn"
-  onclick="saveTournament()"
+class="add-btn"
+onclick="saveTournament()"
 >
 💾 Save Tournament
 </button>
 
 
 <button
-  id="cancelEditBtn"
-  class="hidden"
-  onclick="clearForm()"
+id="cancelEditBtn"
+class="hidden"
+onclick="clearForm()"
 >
 ❌ Cancel
 </button>
 
 
 <div
-  id="formMessage"
-  class="message hidden"
+id="formMessage"
+class="message hidden"
 ></div>
 
 </div>
@@ -427,15 +404,13 @@ Description
 
 <div class="card">
 
-<h2>
-🏆 Tournament Management
-</h2>
+<h2>🏆 Tournament Management</h2>
 
 <br>
 
 <div
-  id="tournamentList"
-  class="loading"
+id="tournamentList"
+class="loading"
 >
 Loading...
 </div>
@@ -449,17 +424,15 @@ Loading...
 
 <script>
 
-
-/* ==============================
+/* ==========================
    SUPABASE CONFIG
-============================== */
+========================== */
 
 const SUPABASE_URL =
 "https://gxnijfjzigbxvibgtvwj.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_kegdIDq_ppqQF302sJXVWA_v_fzHc7E";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -468,16 +441,11 @@ supabase.createClient(
 );
 
 
-
-/* ==============================
+/* ==========================
    MESSAGE
-============================== */
+========================== */
 
-function message(
-  id,
-  text,
-  type="normal"
-){
+function message(id,text,type="normal"){
 
   const box =
   document.getElementById(id);
@@ -490,21 +458,20 @@ function message(
     "error"
   );
 
-  if(type==="success"){
+  if(type === "success"){
     box.classList.add("success");
   }
 
-  if(type==="error"){
+  if(type === "error"){
     box.classList.add("error");
   }
 
 }
 
 
-
-/* ==============================
-   ADMIN LOGIN
-============================== */
+/* ==========================
+   LOGIN
+========================== */
 
 async function loginAdmin(){
 
@@ -542,11 +509,8 @@ async function loginAdmin(){
     error
   } =
   await supabaseClient.auth.signInWithPassword({
-
     email:email,
-
     password:password
-
   });
 
 
@@ -567,10 +531,9 @@ async function loginAdmin(){
 }
 
 
-
-/* ==============================
+/* ==========================
    CHECK ADMIN
-============================== */
+========================== */
 
 async function checkAdmin(){
 
@@ -583,16 +546,14 @@ async function checkAdmin(){
 
 
   if(!user){
-
     return;
-
   }
 
 
   /*
     IMPORTANT:
-    admins table-এ id নেই।
-    তাই শুধু email,user_id নেওয়া হচ্ছে।
+    admins table-এ id column নেই।
+    তাই শুধু email এবং user_id নেওয়া হচ্ছে।
   */
 
   const {
@@ -600,17 +561,10 @@ async function checkAdmin(){
     error
   } =
   await supabaseClient
-
-    .from("admins")
-
-    .select("email,user_id")
-
-    .eq(
-      "user_id",
-      user.id
-    )
-
-    .maybeSingle();
+  .from("admins")
+  .select("email,user_id")
+  .eq("user_id",user.id)
+  .maybeSingle();
 
 
   if(error){
@@ -623,16 +577,12 @@ async function checkAdmin(){
     );
 
     return;
-
   }
 
 
   if(!admin){
 
-    await supabaseClient
-    .auth
-    .signOut();
-
+    await supabaseClient.auth.signOut();
 
     message(
       "loginMessage",
@@ -641,7 +591,6 @@ async function checkAdmin(){
     );
 
     return;
-
   }
 
 
@@ -668,16 +617,14 @@ async function checkAdmin(){
 }
 
 
-
-/* ==============================
+/* ==========================
    LOAD TOURNAMENTS
-============================== */
+========================== */
 
 async function loadTournaments(){
 
   const list =
-  document
-  .getElementById("tournamentList");
+  document.getElementById("tournamentList");
 
 
   list.innerHTML =
@@ -689,11 +636,8 @@ async function loadTournaments(){
     error
   } =
   await supabaseClient
-
   .from("tournaments")
-
   .select("*")
-
   .order(
     "created_at",
     {
@@ -711,7 +655,6 @@ async function loadTournaments(){
     '</div>';
 
     return;
-
   }
 
 
@@ -725,7 +668,7 @@ async function loadTournaments(){
   tournaments.length;
 
 
-  if(tournaments.length===0){
+  if(tournaments.length === 0){
 
     list.innerHTML =
     '<div class="empty">' +
@@ -739,7 +682,6 @@ async function loadTournaments(){
     "0";
 
     return;
-
   }
 
 
@@ -861,10 +803,9 @@ async function loadTournaments(){
 }
 
 
-
-/* ==============================
+/* ==========================
    PLAYER COUNT
-============================== */
+========================== */
 
 async function getPlayerCount(id){
 
@@ -873,9 +814,7 @@ async function getPlayerCount(id){
     error
   } =
   await supabaseClient
-
   .from("tournament_players")
-
   .select(
     "id",
     {
@@ -883,7 +822,6 @@ async function getPlayerCount(id){
       head:true
     }
   )
-
   .eq(
     "tournament_id",
     id
@@ -895,7 +833,6 @@ async function getPlayerCount(id){
     console.log(error);
 
     return 0;
-
   }
 
 
@@ -904,16 +841,14 @@ async function getPlayerCount(id){
 }
 
 
-
-/* ==============================
+/* ==========================
    SHOW PLAYERS
-============================== */
+========================== */
 
 async function showPlayers(id){
 
   const box =
-  document
-  .getElementById(
+  document.getElementById(
     "players-" + id
   );
 
@@ -924,9 +859,7 @@ async function showPlayers(id){
   if(
     box.classList.contains("hidden")
   ){
-
     return;
-
   }
 
 
@@ -941,9 +874,7 @@ async function showPlayers(id){
     error
   } =
   await supabaseClient
-
   .from("tournament_players")
-
   .select(`
     id,
     player_name,
@@ -952,12 +883,10 @@ async function showPlayers(id){
     whatsapp,
     joined_at
   `)
-
   .eq(
     "tournament_id",
     id
   )
-
   .order(
     "joined_at",
     {
@@ -975,13 +904,12 @@ async function showPlayers(id){
     '</div>';
 
     return;
-
   }
 
 
   if(
     !data ||
-    data.length===0
+    data.length === 0
   ){
 
     box.innerHTML =
@@ -990,7 +918,6 @@ async function showPlayers(id){
     '</div>';
 
     return;
-
   }
 
 
@@ -1011,7 +938,7 @@ async function showPlayers(id){
       div.innerHTML = `
 
         <b>
-          #${index+1}
+          #${index + 1}
           ${escapeHtml(
             player.player_name || "-"
           )}
@@ -1049,10 +976,9 @@ async function showPlayers(id){
 }
 
 
-
-/* ==============================
+/* ==========================
    SAVE TOURNAMENT
-============================== */
+========================== */
 
 async function saveTournament(){
 
@@ -1103,9 +1029,7 @@ async function saveTournament(){
     );
 
     return;
-
   }
-
 
 
   /* EDIT */
@@ -1116,9 +1040,7 @@ async function saveTournament(){
       error
     } =
     await supabaseClient
-
     .from("tournaments")
-
     .update({
 
       title:title,
@@ -1135,7 +1057,6 @@ async function saveTournament(){
       description || null
 
     })
-
     .eq(
       "id",
       editId
@@ -1152,7 +1073,6 @@ async function saveTournament(){
       );
 
       return;
-
     }
 
 
@@ -1173,9 +1093,7 @@ async function saveTournament(){
       error
     } =
     await supabaseClient
-
     .from("tournaments")
-
     .insert({
 
       title:title,
@@ -1204,7 +1122,6 @@ async function saveTournament(){
       );
 
       return;
-
     }
 
 
@@ -1224,10 +1141,9 @@ async function saveTournament(){
 }
 
 
-
-/* ==============================
+/* ==========================
    EDIT TOURNAMENT
-============================== */
+========================== */
 
 async function editTournament(id){
 
@@ -1236,16 +1152,12 @@ async function editTournament(id){
     error
   } =
   await supabaseClient
-
   .from("tournaments")
-
   .select("*")
-
   .eq(
     "id",
     id
   )
-
   .single();
 
 
@@ -1257,7 +1169,6 @@ async function editTournament(id){
     );
 
     return;
-
   }
 
 
@@ -1317,10 +1228,9 @@ async function editTournament(id){
 }
 
 
-
-/* ==============================
+/* ==========================
    DELETE TOURNAMENT
-============================== */
+========================== */
 
 async function deleteTournament(id){
 
@@ -1331,9 +1241,7 @@ async function deleteTournament(id){
 
 
   if(!ok){
-
     return;
-
   }
 
 
@@ -1341,11 +1249,8 @@ async function deleteTournament(id){
     error
   } =
   await supabaseClient
-
   .from("tournaments")
-
   .delete()
-
   .eq(
     "id",
     id
@@ -1360,7 +1265,6 @@ async function deleteTournament(id){
     );
 
     return;
-
   }
 
 
@@ -1374,47 +1278,40 @@ async function deleteTournament(id){
 }
 
 
-
-/* ==============================
+/* ==========================
    CLEAR FORM
-============================== */
+========================== */
 
 function clearForm(){
 
   document
   .getElementById("editId")
-  .value =
-  "";
+  .value = "";
 
 
   document
   .getElementById("title")
-  .value =
-  "";
+  .value = "";
 
 
   document
   .getElementById("mode")
-  .value =
-  "Solo";
+  .value = "Solo";
 
 
   document
   .getElementById("date")
-  .value =
-  "";
+  .value = "";
 
 
   document
   .getElementById("time")
-  .value =
-  "";
+  .value = "";
 
 
   document
   .getElementById("description")
-  .value =
-  "";
+  .value = "";
 
 
   document
@@ -1431,10 +1328,9 @@ function clearForm(){
 }
 
 
-
-/* ==============================
+/* ==========================
    LOGOUT
-============================== */
+========================== */
 
 async function logoutAdmin(){
 
@@ -1442,53 +1338,50 @@ async function logoutAdmin(){
   .auth
   .signOut();
 
-
   location.reload();
 
 }
 
 
-
-/* ==============================
+/* ==========================
    ESCAPE HTML
-============================== */
+========================== */
 
 function escapeHtml(value){
 
   return String(value ?? "")
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
 
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
 
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
 
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
 
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
 
 }
 
 
-
-/* ==============================
+/* ==========================
    START
-============================== */
+========================== */
 
 checkAdmin();
 
